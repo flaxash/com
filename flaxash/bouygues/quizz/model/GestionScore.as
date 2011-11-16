@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.model
 {
-	import flaxash.bouygues.quizz.model.proxy.ProxyMajScore;
+	import com.flaxash.bouygues.quizz.model.proxy.ProxyMajScore;
 
 	public class GestionScore
 	{

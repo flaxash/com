@@ -15,6 +15,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 		
 		public function getScore():uint {
 			//appelle à la fonction qui récupère la score dans la bdd
+			return 0;
 		}
 	}
 }

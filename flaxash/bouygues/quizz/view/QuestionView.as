@@ -29,7 +29,7 @@ package com.flaxash.quizz.view
 		public function QuestionView()
 		{
 			super();
-			signalChoix = ne Signal()
+			signalChoix = new Signal()
 		}
 		
 		public function get question():QuestionVO
