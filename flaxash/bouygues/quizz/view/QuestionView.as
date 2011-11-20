@@ -60,13 +60,9 @@ package com.flaxash.quizz.view
 
 		}
 		private function onClick(me:MouseEvent):void {
-			//Etudie la réponse et réagis en fonction
+			//Transmet la réponse
 			var num:uint = (me.target as SimpleButton).name.charAt((me.target as SimpleButton).name.length-1);
-			if (num==_question.reponseCorrecte) {
-				signalChoix.dispatch("reussite");
-			} else {
-				signalChoix.dispatch(("echec");
-			}
+			signalChoix.dispatch(num);
 		}
 
 	}

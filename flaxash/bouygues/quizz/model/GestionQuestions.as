@@ -12,8 +12,8 @@ package com.flaxash.bouygues.quizz.model
 		public var signalReady:Signal;
 		
 		private var _proxyQuestions:ProxyLoaderQuestions;
-		private var _allQuestions:Vector.<QuestionVO>;
-		private var _questions:Vector.<QuestionVO>;
+		private var _allQuestions:Array;
+		
 		
 		public function GestionQuestions()
 		{
@@ -28,19 +28,13 @@ package com.flaxash.bouygues.quizz.model
 			signalReady = new Signal();
 		}
 
-		private function questionsLoaded(questions:Vector.<QuestionVO>):void {
+		private function questionsLoaded(questions:Array):void {
 			_allQuestions = questions;
-			tirageAleat(_allQuestions,3);
-		}
-		private function tirageAleat(questions:Vector.<QuestionVO>,nb:uint):void {
-			var vectorTemp:Vector.<QuestionVO> = questions;
-			_questions = new Vector.<QuestionVO>();
-			for (var i:uint=0;i<nb;i++) {
-				var n:uint = Math.floor(Math.random()*vectorTemp.length);
-				_questions.push(vectorTemp[n]);
-			}
-			trace(_questions);
 			signalReady.dispatch(true);
+			
+		}
+		public function getQuestion(id:uint):* {
+			return _allQuestions[id];
 		}
 	}
 }
