@@ -61,7 +61,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 				for each (var noeud:XML in reponseXML.q)
 				{
 					objQuestionShort = new QuestionShortVO();
-					objQuestionShort.dejaFait = noeud.@rep==1?true:false;
+					objQuestionShort.dejaFait = noeud.@rep=="1"?true:false;
 					objQuestionShort.numQuestion = uint(noeud.toString());
 					listeQuestions.push(objQuestionShort);
 					

@@ -14,6 +14,7 @@ package com.flaxash.bouygues.quizz.view
 		public function PageGoView()
 		{
 			super();
+			visible= false;
 			initListeners();
 		}
 		

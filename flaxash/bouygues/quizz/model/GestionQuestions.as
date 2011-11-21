@@ -30,11 +30,11 @@ package com.flaxash.bouygues.quizz.model
 
 		private function questionsLoaded(questions:Array):void {
 			_allQuestions = questions;
-			signalReady.dispatch(true);
+			signalReady.dispatch(_allQuestions);
 			
 		}
 		public function getQuestion(id:uint):* {
-			return _allQuestions[id];
+			return _allQuestions[id-1];
 		}
 	}
 }

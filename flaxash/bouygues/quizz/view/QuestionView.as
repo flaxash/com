@@ -1,4 +1,4 @@
-package com.flaxash.quizz.view
+package com.flaxash.bouygues.quizz.view
 {
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	
@@ -10,17 +10,18 @@ package com.flaxash.quizz.view
 	
 	import org.osflash.signals.Signal;
 	
-	public class QuestionView extends Sprite
+	public class QuestionView extends MovieClip
 	{
 		//sur la scene
-		public var questionTxt:TextField;
-		public var reponse0:MovieClip;
-		public var bouton0:SimpleButton;
+		public var questionTF:TextField;
+		public var timerQuestion:MovieClip;
 		public var reponse1:MovieClip;
 		public var bouton1:SimpleButton;
-		//optionnel
 		public var reponse2:MovieClip;
 		public var bouton2:SimpleButton;
+		//optionnel
+		public var reponse3:MovieClip;
+		public var bouton3:SimpleButton;
 		
 		private var _question:QuestionVO;
 		
@@ -29,7 +30,8 @@ package com.flaxash.quizz.view
 		public function QuestionView()
 		{
 			super();
-			signalChoix = new Signal()
+			signalChoix = new Signal();
+			visible = false;
 		}
 		
 		public function get question():QuestionVO
@@ -44,10 +46,10 @@ package com.flaxash.quizz.view
 			initListeners();
 		}
 		private function majView():void {
-			questionTxt.text = _question.question;
+			questionTF.text = _question.question;
 			for (var i:uint=0;i<_question.nbReponses;i++) {
 				var nomReponse:String = "reponse"+ i;
-				(this.getChildByName(nomReponse) as TextField).text = -question.reponses[i];
+				(this.getChildByName(nomReponse) as TextField).text = question.reponses[i];
 				
 			}
 		}
@@ -61,7 +63,7 @@ package com.flaxash.quizz.view
 		}
 		private function onClick(me:MouseEvent):void {
 			//Transmet la réponse
-			var num:uint = (me.target as SimpleButton).name.charAt((me.target as SimpleButton).name.length-1);
+			var num:uint = uint((me.target as SimpleButton).name.charAt((me.target as SimpleButton).name.length-1));
 			signalChoix.dispatch(num);
 		}
 

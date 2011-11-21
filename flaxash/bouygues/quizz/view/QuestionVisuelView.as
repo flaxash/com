@@ -1,4 +1,4 @@
-package com.flaxash.quizz.view
+package com.flaxash.bouygues.quizz.view
 {
 	public class QuestionVisuelView extends QuestionView
 	{

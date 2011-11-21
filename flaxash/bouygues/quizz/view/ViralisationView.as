@@ -7,6 +7,7 @@ package com.flaxash.bouygues.quizz.view
 		public function ViralisationView()
 		{
 			super();
+			visible= false;
 		}
 	}
 }

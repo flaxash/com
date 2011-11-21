@@ -18,7 +18,8 @@ package com.flaxash.bouygues.quizz
 		private var loaderQuizz:ProxyGetQuizz;
 		private var loadingsTraites:uint=0;
 		
-		private var listeQuestionsChoisies:Array;
+		public var listeQuestionsChoisies:Array;
+		public var allQuestions:Array;
 		
 		public var signalReady:Signal;
 		public var step:uint;
@@ -41,8 +42,9 @@ package com.flaxash.bouygues.quizz
 			gestionQuestions.signalReady.add(questionsReady);
 			gestionQuestions.getQuestions();
 		}
-		private function questionsReady(isReady:Boolean):void {
-			if (isReady) {
+		private function questionsReady(all:Array):void {
+			if (all) {
+				allQuestions = all;
 				trace("questions prêtes");
 				initLoadings();
 			}
