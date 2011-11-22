@@ -66,6 +66,7 @@ package com.flaxash.bouygues.quizz.view
 			trace(me.currentTarget.name + "-" + uint(nomClip.substr(8,1)));
 			var num:uint = uint(nomClip.substr(8,1));
 			signalChoix.dispatch((listeQuestions[num-1] as QuestionVO).numQuestion);
+			//signalChoix.dispatch(2);
 		}
 	}
 }

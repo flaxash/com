@@ -1,5 +1,6 @@
 package com.flaxash.bouygues.quizz.model.proxy
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.*;
 	
 	import flash.events.Event;
@@ -7,8 +8,6 @@ package com.flaxash.bouygues.quizz.model.proxy
 	import flash.net.URLRequest;
 	
 	import org.osflash.signals.Signal;
-	
-	
 	//classe pour charger les questions à partir du XML
 	public class ProxyLoaderQuestions
 	{
@@ -35,7 +34,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 				//trace(noeudXML);
 				//question = new QuestionVO();
 				
-				trace(noeudXML.type.toString());
+				//trace(noeudXML.type.toString());
 				switch(noeudXML.type.toString()) {
 					case "son" :
 						question = new QuestionSonVO();
@@ -68,9 +67,16 @@ package com.flaxash.bouygues.quizz.model.proxy
 				question.numQuestion = noeudXML.@numQuestion;
 				question.type = noeudXML.type;
 				question.question = noeudXML.intitule;
-				question.nbReponses = noeudXML.reponse.length;
-				trace(question)
+				
+				question.nbReponses = noeudXML.reponse.length();
+				question.reponses = new Vector.<String>();
+				for (var i:uint=0;i<question.nbReponses;i++) {
+					
+					question.reponses.push(noeudXML.reponse[i].toString())
+				}
+				//trace(question.question)
 				questions.push(question);
+				//MonsterDebugger.trace(this,question);
 			}
 			signalLoaded.dispatch(questions);
 		}

@@ -76,6 +76,7 @@ package com.flaxash.bouygues.quizz.view
 				if (monMC) {
 				trace(monMC);
 				monMC.visible=false;
+				monMC.enabled = false;
 				}
 			}
 		}
@@ -83,6 +84,7 @@ package com.flaxash.bouygues.quizz.view
 		public function affiche(monMC:MovieClip):void {
 			allInvisible();
 			monMC.visible = true;
+			monMC.enabled =true;
 		}
 		
 		private function transitionFinie(e:Event):void 

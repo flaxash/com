@@ -80,9 +80,7 @@ package com.flaxash.bouygues.quizz
 		private function majInitVars(_score:uint,_step:uint):void 
 		{
 			score = _score;
-			step = _step;
-			
-			
+			step = _step;			
 		}
 	}
 }
