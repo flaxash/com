@@ -3,6 +3,7 @@ package com.flaxash.bouygues.quizz.view
 	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	import com.flaxash.bouygues.quizz.view.component.BoutonReponse;
+	import com.flaxash.bouygues.quizz.view.component.TimerQuestion;
 	
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
@@ -16,24 +17,24 @@ package com.flaxash.bouygues.quizz.view
 	{
 		//sur la scene
 		public var questionTF:TextField;
-		public var timerQuestion:MovieClip;
-		public var reponseBtn1:MovieClip;
+		public var timerQuestion:TimerQuestion;
+		public var reponseBtn1:BoutonReponse;
 		public var bouton1:SimpleButton;
-		public var reponseBtn2:MovieClip;
+		public var reponseBtn2:BoutonReponse;
 		public var bouton2:SimpleButton;
 		//optionnel
-		public var reponseBtn3:MovieClip;
+		public var reponseBtn3:BoutonReponse;
 		public var bouton3:SimpleButton;
 		
-		private var monArray:Array = new Array(reponseBtn1,reponseBtn2,reponseBtn3);
+		private var monArray:Array ;
 		private var _question:QuestionVO;
 		
-		public var signalChoix:Signal;
+		public var signalReponse:Signal;
 		
 		public function QuestionView()
 		{
 			super();
-			signalChoix = new Signal();
+			signalReponse = new Signal();
 			visible = false;
 		}
 		
@@ -43,39 +44,31 @@ package com.flaxash.bouygues.quizz.view
 		}
 		
 		public function majView(value:QuestionVO):void {
+			
 			_question = value;
 			questionTF.text = value.question.toUpperCase();
-			MonsterDebugger.trace(this,value.nbReponses);
-			
-			//problème dans cette fonction ...
-			/*for (var i:uint=1;i<value.nbReponses+1;i++) {
-			var nomBouton:String = "reponseBtn"+ i;
-			MonsterDebugger.trace(this,(this.getChildByName(nomBouton) as BoutonReponse));
-			(this.getChildByName(nomBouton) as BoutonReponse).setTexte( value.reponses[i-1].toUpperCase());
-			}*/
-			var i:uint=0;
-			for each (var monBouton:BoutonReponse in monArray) {
-				monBouton.setTexte(value.reponses[i].toUpperCase());
-				i++;
-			}
+			reponseBtn1.setTexte(value.reponses[0]);
+			reponseBtn2.setTexte(value.reponses[1]);
+			if (value.nbReponses==3) reponseBtn3.setTexte(value.reponses[2]);
 			initListeners();
 			
 		}
 		private function initListeners():void {
-			MonsterDebugger.trace(this,_question.nbReponses);
-			
-			for (var i:uint=1;i<_question.nbReponses+1;i++) {
-				var nomBouton:String = "reponseBtn"+ i;
-				MonsterDebugger.trace(this,(this.getChildByName(nomBouton) as BoutonReponse));
-				(this.getChildByName(nomBouton) as BoutonReponse).addEventListener(MouseEvent.CLICK,onClick);
-				
-			}
-			
+			MonsterDebugger.trace(this,_question.nbReponses  + " réponses" );
+			reponseBtn1.addEventListener(MouseEvent.CLICK,onClick);
+			reponseBtn2.addEventListener(MouseEvent.CLICK,onClick);
+			if (_question.nbReponses ==3) reponseBtn3.addEventListener(MouseEvent.CLICK,onClick);
+			timerQuestion.signalTimer.add(tempsEcoule);
+			timerQuestion.start();
 		}
 		private function onClick(me:MouseEvent):void {
 			//Transmet la réponse
-			var num:uint = uint((me.target as SimpleButton).name.charAt((me.target as SimpleButton).name.length-1));
-			signalChoix.dispatch(num);
+			var num:uint = uint((me.currentTarget as BoutonReponse).name.charAt((me.currentTarget as BoutonReponse).name.length-1));
+			MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonReponse).name) + "ie " +num;
+			signalReponse.dispatch(_question.numQuestion,num);
+		}
+		private function tempsEcoule():void {
+			signalReponse.dispatch(_question.numQuestion,0);
 		}
 		
 	}

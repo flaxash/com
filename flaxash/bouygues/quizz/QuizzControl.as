@@ -10,6 +10,8 @@ package com.flaxash.bouygues.quizz
 	
 	import org.osflash.signals.Signal;
 	
+	import com.demonsters.debugger.MonsterDebugger;
+	
 	public class QuizzControl extends Sprite
 	{
 		private var gestionQuestions:GestionQuestions;
@@ -22,6 +24,7 @@ package com.flaxash.bouygues.quizz
 		public var allQuestions:Array;
 		
 		public var signalReady:Signal;
+		public var signalReponse:Signal;
 		public var step:uint;
 		public var score:uint;
 		
@@ -29,6 +32,7 @@ package com.flaxash.bouygues.quizz
 		{
 			super();
 			signalReady = new Signal(Boolean);
+			signalReponse = new Signal(XML);
 			
 		}
 		public function init():void {
@@ -37,6 +41,35 @@ package com.flaxash.bouygues.quizz
 			loaderInitVars = new ProxyGetInitVars();
 			loaderQuizz = new ProxyGetQuizz();
 			initListeners();
+		}
+		public function valideReponse(numQuestion:uint,numReponse:uint):void 
+		{
+			loaderQuizz.signalReponse.add(reponsePrete);
+			loaderQuizz.valideReponse(numQuestion,numReponse);
+		}
+		public function actualiseQuestions(questions:Vector.<QuestionShortVO>):void {
+			MonsterDebugger.trace(this,"mise à jour : " + questions);
+			listeQuestionsChoisies = new Array();
+			var newQuestion:*;
+			for each (var question:QuestionShortVO in questions) 
+			{
+				newQuestion = gestionQuestions.getQuestion(question.numQuestion);
+				newQuestion.dejaFait = question.dejaFait;
+				listeQuestionsChoisies.push(newQuestion);
+				trace(newQuestion);
+				switch (newQuestion.type) {
+					case "video_choixPhoto" :
+						trace((newQuestion as QuestionVideoChoixPhotoVO).urlExtrait);
+						break;
+					default :
+						break;
+				}
+			}
+
+		}
+		private function reponsePrete(reponse:String,xmlResult:XML):void {		
+			MonsterDebugger.trace(this,"reponse prete dans quizzcontrol : " +reponse);
+			signalReponse.dispatch(xmlResult);
 		}
 		private function initListeners():void {
 			gestionQuestions.signalReady.add(questionsReady);
@@ -82,5 +115,6 @@ package com.flaxash.bouygues.quizz
 			score = _score;
 			step = _step;			
 		}
+		
 	}
 }

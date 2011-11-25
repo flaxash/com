@@ -1,14 +1,17 @@
 package com.flaxash.bouygues.quizz.view
 {
+	import com.flaxash.bouygues.quizz.model.VO.QuestionShortVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
+	import flash.filters.ColorMatrixFilter;
 	
 	import org.osflash.signals.Signal;
 	
+	import com.demonsters.debugger.MonsterDebugger;
 	public class ChoixQuestionView extends MovieClip
 	{
 		private var listeQuestions:Vector.<QuestionVO>;
@@ -21,12 +24,15 @@ package com.flaxash.bouygues.quizz.view
 		public var choixBtn4:MovieClip;
 		public var choixBtn5:MovieClip;
 
-
+		private var greyMatrix:Array;
+		private var myGreyMatrixFilter:ColorMatrixFilter;
+		
 		public function ChoixQuestionView()
 		{
 			super();
 			init();
 			visible = false;
+			listeQuestions = new Vector.<QuestionVO>();
 		}
 		public function setQuestions(q1:QuestionVO,q2:QuestionVO,q3:QuestionVO,q4:QuestionVO,q5:QuestionVO):void 
 		{		
@@ -35,8 +41,26 @@ package com.flaxash.bouygues.quizz.view
 			initListeners();
 			//trace(q1.dejaFait + "-"+q2.dejaFait + "-" + q3.dejaFait + "-" + q4.dejaFait + "-" + q5.dejaFait);
 		}
+		public function majChoix(mesChoix:Vector.<QuestionShortVO>):void {
+			for (var i:uint=0;i<mesChoix.length;i++) {
+				listeQuestions[i].dejaFait = mesChoix[i].dejaFait;
+			}
+			initListeners();
+		}
 		private function init():void {
 			signalChoix = new Signal(uint);
+			greyMatrix = new Array();
+			//var r:Number=0.212671;
+			//var g:Number=0.715160;
+			//var b:Number=0.072169;
+			var r:Number=0.33;
+			var g:Number=0.33;
+			var b:Number=0.34;
+			greyMatrix = greyMatrix.concat([r,g,b, 0, 0]); // red
+			greyMatrix = greyMatrix.concat([r,g,b, 0, 0]); // green
+			greyMatrix = greyMatrix.concat([r,g,b, 0, 0]); // blue
+			greyMatrix = greyMatrix.concat([0, 0, 0, 1, 0]); // alpha
+			myGreyMatrixFilter = new ColorMatrixFilter(greyMatrix);
 			
 		}
 		private function initListeners():void {
@@ -44,29 +68,37 @@ package com.flaxash.bouygues.quizz.view
 			var bouton:MovieClip;
 			for (var i:uint=1;i<6;i++) {
 				nomBouton = "choixBtn" + i;
-				trace("bouton : " +this.getChildByName(nomBouton));
-				bouton = MovieClip(this.getChildByName(nomBouton));			
-				//bouton.enabled != listeQuestions[i-1].dejaFait;
-				validate(bouton);
+				MonsterDebugger.trace(this,"bouton : " +this.getChildByName(nomBouton));
+				MonsterDebugger.trace(this,listeQuestions);
+				bouton = MovieClip(this.getChildByName(nomBouton));
+				//if (listeQuestions[i-1]) 
+					bouton.enabled = !listeQuestions[i-1].dejaFait;
+					validate(bouton);
+				
 			}
 			
 		}
 		private function validate(monBouton:MovieClip):void {
+			MonsterDebugger.trace(this,monBouton.name +" enabled ? " + monBouton.enabled);
 			//grise le clip et enleve le listener si dejaFait=true
 			if (!monBouton.enabled) {
-				
+				monBouton.removeEventListener(MouseEvent.CLICK,choixBouton);
+				//grise le bouton
+				monBouton.filters = [myGreyMatrixFilter];
 			} else {
 				monBouton.addEventListener(MouseEvent.CLICK,choixBouton);
+				//enleve les filtres
+				monBouton.filters = null;
 			}
 		}
 		private function choixBouton(me:MouseEvent):void 
-		{
-			
+		{			
 			var nomClip:String = me.currentTarget.name;
 			trace(me.currentTarget.name + "-" + uint(nomClip.substr(8,1)));
 			var num:uint = uint(nomClip.substr(8,1));
 			signalChoix.dispatch((listeQuestions[num-1] as QuestionVO).numQuestion);
 			//signalChoix.dispatch(2);
 		}
+		
 	}
 }

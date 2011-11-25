@@ -4,11 +4,14 @@ package com.flaxash.bouygues.quizz.view
 	import com.flaxash.bouygues.quizz.view.QuestionSonView;
 	import com.flaxash.bouygues.quizz.view.QuestionVideoView;
 	import com.flaxash.bouygues.quizz.view.QuestionVisuelView;
+	import com.flaxash.transitionParticules.GestionParticles;
 	import com.greensock.TimelineLite;
 	import com.greensock.TweenLite;
 	
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	
 	import org.osflash.signals.Signal;
 	
@@ -19,6 +22,7 @@ package com.flaxash.bouygues.quizz.view
 		public var currentState:String;
 		public var ecranActif:MovieClip;
 		public var ecrans:Array;
+		private var lastClip:MovieClip=pageGo;
 		private var statesArray:Array = new Array("pageGo","choixQuestion","question","amis","loading");
 		private var pageGo:PageGoView;
 		private var choixQuestion:ChoixQuestionView;
@@ -81,10 +85,17 @@ package com.flaxash.bouygues.quizz.view
 			}
 		}
 
-		public function affiche(monMC:MovieClip):void {
+		public function affiche(monMC:MovieClip,root:Sprite):void {
 			allInvisible();
 			monMC.visible = true;
 			monMC.enabled =true;
+			/*if (lastClip!=null) {
+				var maTransition : GestionParticles = new GestionParticles(lastClip,new Rectangle(0,0,520,802));
+				root.addChild(maTransition);
+				lastClip.visible=false;
+				//maTransition.startMvt();
+			}*/
+			lastClip=monMC;	
 		}
 		
 		private function transitionFinie(e:Event):void 

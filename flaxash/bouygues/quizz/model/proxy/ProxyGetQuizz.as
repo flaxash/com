@@ -1,5 +1,6 @@
 package com.flaxash.bouygues.quizz.model.proxy
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionShortVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	
@@ -8,9 +9,10 @@ package com.flaxash.bouygues.quizz.model.proxy
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	import org.osflash.signals.Signal;
-
+	
 	public class ProxyGetQuizz
 	{
 		private static const URL_PHP_QUIZZ:String = "http://samesame.php-web.fr/lmfao/services/quizz.php";
@@ -20,7 +22,8 @@ package com.flaxash.bouygues.quizz.model.proxy
 		
 		private var loaderReponse:URLLoader;
 		private var loaderQuestions:URLLoader;
-		private var maRequete:URLRequest;
+		private var maRequeteGet:URLRequest;
+		private var maRequetePost:URLRequest;
 		private var reponseXML:XML;
 		
 		public function ProxyGetQuizz()
@@ -28,8 +31,10 @@ package com.flaxash.bouygues.quizz.model.proxy
 			//constructeur
 			signalReponse = new Signal();
 			signalQuestions = new Signal();
-			maRequete = new URLRequest(URL_PHP_QUIZZ);
-			maRequete.method = URLRequestMethod.GET;
+			maRequeteGet = new URLRequest(URL_PHP_QUIZZ);
+			maRequetePost = new URLRequest(URL_PHP_QUIZZ);
+			maRequeteGet.method = URLRequestMethod.GET;
+			maRequetePost.method = URLRequestMethod.POST;
 			loaderQuestions = new URLLoader();
 			loaderQuestions.addEventListener(Event.COMPLETE,questionsCompleteHandler);
 			loaderQuestions.addEventListener(IOErrorEvent.IO_ERROR,errorHandler);
@@ -41,15 +46,18 @@ package com.flaxash.bouygues.quizz.model.proxy
 		
 		protected function reponseCompleteHandler(event:Event):void
 		{
+			MonsterDebugger.trace(this,"réponse reçue :-) : " + loaderReponse.data);
 			try {
 				reponseXML = new XML(loaderReponse.data);
 				if (reponseXML.win ==1) {
-					signalReponse.dispatch("vrai");
+					signalReponse.dispatch("vrai",reponseXML);
+					//MonsterDebugger.trace(this,"vrai:" + reponseXML);
 				} else { 
-					signalReponse.dispatch("faux"); 
+					signalReponse.dispatch("faux",reponseXML); 
+					//MonsterDebugger.trace(this,"faux:" + reponseXML);
 				}   
 			} catch (e:TypeError) {
-				trace("Could not parse the XML file.");
+				trace("Could not parse the XML file. (from ProxyGetQuizz)");
 			}
 		}
 		protected function questionsCompleteHandler(event:Event):void 
@@ -60,8 +68,9 @@ package com.flaxash.bouygues.quizz.model.proxy
 				var objQuestionShort:QuestionShortVO;
 				for each (var noeud:XML in reponseXML.q)
 				{
+					MonsterDebugger.trace(this,uint(noeud.@rep.toString()));
 					objQuestionShort = new QuestionShortVO();
-					objQuestionShort.dejaFait = noeud.@rep=="1"?true:false;
+					objQuestionShort.dejaFait = Boolean(uint(noeud.@rep.toString()));
 					objQuestionShort.numQuestion = uint(noeud.toString());
 					listeQuestions.push(objQuestionShort);
 					
@@ -76,17 +85,19 @@ package com.flaxash.bouygues.quizz.model.proxy
 		protected function errorHandler(event:Event):void
 		{
 			// TODO Auto-generated method stub
+			MonsterDebugger.trace(this,"erreur pendant la requete php : " + event);
 			
 		}
 		public function valideReponse(numQuestion:uint,numReponse:uint):void {
-			var dataReponse:Object = new Object();
-			dataReponse.idQuestion = numQuestion;
-			dataReponse.idReponse = numReponse;
-			maRequete.data = dataReponse;
-			loaderReponse.load(maRequete);
+			MonsterDebugger.trace(this,"validation de réponse demandée...");
+			var dataReponse:URLVariables = new URLVariables();
+			dataReponse.idquest = numQuestion;
+			dataReponse.idreponse = numReponse;
+			maRequetePost.data = dataReponse;
+			loaderReponse.load(maRequetePost);
 		}
 		public function getListeQuestions():void {
-			loaderQuestions.load(maRequete);
+			loaderQuestions.load(maRequeteGet);
 		}
 	}
 }

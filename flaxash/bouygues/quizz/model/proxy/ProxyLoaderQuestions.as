@@ -59,6 +59,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 						break;
 					case "visuel_2reponses":
 						question = new QuestionVisuelVO();
+						question.nomVisuel = noeudXML.nom_visuel;
 						break;
 					default :
 						question = new QuestionVO();
