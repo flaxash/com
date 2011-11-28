@@ -32,7 +32,7 @@ package com.flaxash.bouygues.quizz.view.component
 			clipNB.mask=spriteMask;
 			
 			//timer toutes les 200ms et qui durent en tout 45 s;
-			timer = new Timer(200,50);
+			timer = new Timer(200,225);
 			signalTimer = new Signal();
 			timer.addEventListener(TimerEvent.TIMER,onTick);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimerComplete);

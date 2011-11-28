@@ -1,53 +1,45 @@
 package com.flaxash.bouygues.quizz.view
 {
 	import com.demonsters.debugger.MonsterDebugger;
-	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
-	import com.flaxash.bouygues.quizz.model.VO.QuestionVideoVO;
-	import com.flaxash.bouygues.quizz.view.component.BoutonReponse;
+	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
 	
 	import flash.display.Loader;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	import flash.system.Security;
 	
-	public class QuestionVideoView extends QuestionView
+	public class Page5QuestionsView extends MovieClip
 	{
 		//sur la scène
+		public var bandeauBas:BandeauBas;
 		public var cibleVideo:MovieClip;
 		public var controlesVideo : MovieClip;
 		private var monPlayer:Object;
 		private var playerReady:Boolean=false;
-		private var idVideo:String;
 		private var my_loader:Loader;
+		public var goUniversalBtn:SimpleButton;
+		//à mettre à jour
+		private static const ID_VIDEO_UNIVERSAL:String = "3u--Joo5xyM";
 		
-		
-		public function QuestionVideoView()
+		public function Page5QuestionsView()
 		{
+			super();
+			visible=false;
+		}
+		public function initPage():void {
+			goUniversalBtn.addEventListener(MouseEvent.CLICK,goUniversal);
 			initYoutube();
 		}
-		//override functions
-		override public function majView(value:QuestionVO):void 
-		{
-			super.majView(value);
-			var question:QuestionVideoVO = value as QuestionVideoVO;
-			
-			
-			idVideo = question.urlExtrait;
-			if (playerReady) joueVideo(idVideo);
-			
-		}
-		override protected function onClick(me:MouseEvent):void {
-			super.onClick(me);
-			monPlayer.pauseVideo();
-		}
-		override protected function tempsEcoule():void {
-			super.tempsEcoule();
-			monPlayer.pauseVideo();
-		}
+		
 		//private functions
+		private function goUniversal(me:MouseEvent):void {
+			navigateToURL(new URLRequest("http://www.universalmobile.fr"),"_blank");
+		}
 		private function initYoutube():void {
 			Security.allowDomain("www.youtube.com");
 			Security.allowDomain("s.ytimg.com/yt/swfbin/");
@@ -63,14 +55,12 @@ package com.flaxash.bouygues.quizz.view
 		} 
 		private function onPlayerReady(e:Event):void{
 			MonsterDebugger.trace(this,"player youtube is ready !");
-			monPlayer.setSize(480,270);
-			my_loader.x = -480/2;
-			my_loader.y = -270/2;
+			monPlayer.setSize(240,135);
+			my_loader.x = -240/2;
+			my_loader.y = -135/2;
 			playerReady =true;
-			if (idVideo) {
-				my_loader.visible = true;
-				joueVideo(idVideo);
-			}
+			my_loader.visible = true;
+			joueVideo(ID_VIDEO_UNIVERSAL);
 		}
 		private function joueVideo(idVid:String):void {
 			monPlayer.cueVideoById(idVid,0);
@@ -96,5 +86,6 @@ package com.flaxash.bouygues.quizz.view
 			monPlayer.playVideo();
 			controlesVideo.gotoAndStop("vide");
 		}
+		
 	}
 }

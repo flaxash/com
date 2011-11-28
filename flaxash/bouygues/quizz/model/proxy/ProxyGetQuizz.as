@@ -68,7 +68,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 				var objQuestionShort:QuestionShortVO;
 				for each (var noeud:XML in reponseXML.q)
 				{
-					MonsterDebugger.trace(this,uint(noeud.@rep.toString()));
+					//MonsterDebugger.trace(this,uint(noeud.@rep.toString()));
 					objQuestionShort = new QuestionShortVO();
 					objQuestionShort.dejaFait = Boolean(uint(noeud.@rep.toString()));
 					objQuestionShort.numQuestion = uint(noeud.toString());
@@ -77,7 +77,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 				}
 				signalQuestions.dispatch(listeQuestions);
 			} catch (e:TypeError) {
-				trace("Could not parse the XML file.");
+				trace("Could not parse the quizz XML file.");
 			}
 
 			

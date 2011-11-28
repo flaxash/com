@@ -1,7 +1,10 @@
 package com.flaxash.bouygues.quizz.view
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionShortVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
+	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
+	import com.flaxash.bouygues.quizz.view.component.BoutonChoixQuestion;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -11,22 +14,23 @@ package com.flaxash.bouygues.quizz.view
 	
 	import org.osflash.signals.Signal;
 	
-	import com.demonsters.debugger.MonsterDebugger;
 	public class ChoixQuestionView extends MovieClip
 	{
 		private var listeQuestions:Vector.<QuestionVO>;
 		public var signalChoix:Signal;
 		
 		//sur la scène
-		public var choixBtn1:MovieClip;
-		public var choixBtn2:MovieClip;
-		public var choixBtn3:MovieClip;
-		public var choixBtn4:MovieClip;
-		public var choixBtn5:MovieClip;
-
+		public var choixBtn1:BoutonChoixQuestion;
+		public var choixBtn2:BoutonChoixQuestion;
+		public var choixBtn3:BoutonChoixQuestion;
+		public var choixBtn4:BoutonChoixQuestion;
+		public var choixBtn5:BoutonChoixQuestion;
+		public var bandeauBas:BandeauBas;
+		
 		private var greyMatrix:Array;
 		private var myGreyMatrixFilter:ColorMatrixFilter;
 		
+		private static const NB_FRAMES_BOUTON:uint = 7;
 		public function ChoixQuestionView()
 		{
 			super();
@@ -66,15 +70,23 @@ package com.flaxash.bouygues.quizz.view
 		private function initListeners():void {
 			var nomBouton:String = "";
 			var bouton:MovieClip;
+			var numFrame:uint=1;
+			//MonsterDebugger.trace(this,listeQuestions[0].numQuestion%7 +1 + " frame de depart dans choixQuestion pour les boutons");
+			var numDepart:uint = listeQuestions[0].numQuestion%NB_FRAMES_BOUTON + 1;
+			//MonsterDebugger.trace(this,numDepart + " frame de depart dans choixQuestion pour les boutons");
 			for (var i:uint=1;i<6;i++) {
 				nomBouton = "choixBtn" + i;
-				MonsterDebugger.trace(this,"bouton : " +this.getChildByName(nomBouton));
-				MonsterDebugger.trace(this,listeQuestions);
+				//MonsterDebugger.trace(this,"bouton : " +this.getChildByName(nomBouton));
+				//MonsterDebugger.trace(this,listeQuestions);
 				bouton = MovieClip(this.getChildByName(nomBouton));
 				//if (listeQuestions[i-1]) 
-					bouton.enabled = !listeQuestions[i-1].dejaFait;
-					validate(bouton);
-				
+				bouton.enabled = !listeQuestions[i-1].dejaFait;
+				validate(bouton);
+				numFrame = (numDepart + i)%NB_FRAMES_BOUTON + 1;
+				MonsterDebugger.trace(this,numFrame + " a été choisie pour bouton " +i);
+				bouton.visuels.gotoAndStop(numFrame);
+				//bouton.buttonMode = true;
+				//bouton.intro();
 			}
 			
 		}

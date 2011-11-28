@@ -1,5 +1,6 @@
 package com.flaxash.bouygues.quizz
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.*;
 	import com.flaxash.bouygues.quizz.model.VO.*;
 	import com.flaxash.bouygues.quizz.model.proxy.ProxyGetInitVars;
@@ -9,8 +10,6 @@ package com.flaxash.bouygues.quizz
 	import flash.display.Sprite;
 	
 	import org.osflash.signals.Signal;
-	
-	import com.demonsters.debugger.MonsterDebugger;
 	
 	public class QuizzControl extends Sprite
 	{
@@ -22,6 +21,7 @@ package com.flaxash.bouygues.quizz
 		
 		public var listeQuestionsChoisies:Array;
 		public var allQuestions:Array;
+		public var nbQuestionsRestantes:uint;
 		
 		public var signalReady:Signal;
 		public var signalReponse:Signal;
@@ -51,10 +51,12 @@ package com.flaxash.bouygues.quizz
 			MonsterDebugger.trace(this,"mise à jour : " + questions);
 			listeQuestionsChoisies = new Array();
 			var newQuestion:*;
+			nbQuestionsRestantes = 5;
 			for each (var question:QuestionShortVO in questions) 
 			{
 				newQuestion = gestionQuestions.getQuestion(question.numQuestion);
 				newQuestion.dejaFait = question.dejaFait;
+				if (newQuestion.dejaFait) nbQuestionsRestantes--;
 				listeQuestionsChoisies.push(newQuestion);
 				trace(newQuestion);
 				switch (newQuestion.type) {
@@ -66,6 +68,18 @@ package com.flaxash.bouygues.quizz
 				}
 			}
 
+		}
+		public function getQuestions():Vector.<QuestionShortVO> 
+		{
+			var newQuestions:Vector.<QuestionShortVO> = new Vector.<QuestionShortVO>();
+			for each (var questionVO:QuestionVO in listeQuestionsChoisies) 
+			{
+				var maQuestionShort:QuestionShortVO = new QuestionShortVO();
+				maQuestionShort.dejaFait = questionVO.dejaFait;
+				maQuestionShort.numQuestion = questionVO.numQuestion;
+				newQuestions.push(maQuestionShort);
+			}
+			return newQuestions;
 		}
 		private function reponsePrete(reponse:String,xmlResult:XML):void {		
 			MonsterDebugger.trace(this,"reponse prete dans quizzcontrol : " +reponse);
@@ -86,18 +100,22 @@ package com.flaxash.bouygues.quizz
 			loaderInitVars.signalInitVars.add(majInitVars);
 			loaderQuizz.signalQuestions.add(majListeQuestions);
 			loaderInitVars.loadInitVars();
-			loaderQuizz.getListeQuestions();			
+			//loaderQuizz.getListeQuestions();
+						
 		}
 		
 		private function majListeQuestions(reponseVector:Vector.<QuestionShortVO>):void
 		{
+			loadingsTraites++;
 			//trace(reponseVector.toString());
 			listeQuestionsChoisies = new Array();
 			var newQuestion:*;
+			nbQuestionsRestantes = 5;
 			for each (var question:QuestionShortVO in reponseVector) 
 			{
 				newQuestion = gestionQuestions.getQuestion(question.numQuestion);
 				newQuestion.dejaFait = question.dejaFait;
+				if (newQuestion.dejaFait) nbQuestionsRestantes--;
 				listeQuestionsChoisies.push(newQuestion);
 				trace(newQuestion);
 				switch (newQuestion.type) {
@@ -108,12 +126,17 @@ package com.flaxash.bouygues.quizz
 						break;
 				}
 			}
-			signalReady.dispatch(true);
+			MonsterDebugger.trace(this,"listeQuestions prêtes " + "- "+loadingsTraites);
+			if (loadingsTraites==2) signalReady.dispatch(true);
 		}
 		private function majInitVars(_score:uint,_step:uint):void 
 		{
+			loadingsTraites++;
+			MonsterDebugger.trace(this,"score.php reçu");
 			score = _score;
-			step = _step;			
+			step = _step;	
+			if (step==1 || step==3 || loadingsTraites==2) signalReady.dispatch(true);
+			if (step==2) loaderQuizz.getListeQuestions();
 		}
 		
 	}

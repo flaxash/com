@@ -10,6 +10,8 @@ package com.flaxash.bouygues.quizz.view
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.media.SoundMixer
 	
 	import org.osflash.signals.Signal;
 	
@@ -47,6 +49,8 @@ package com.flaxash.bouygues.quizz.view
 			
 			_question = value;
 			questionTF.text = value.question.toUpperCase();
+			questionTF.autoSize = TextFieldAutoSize.LEFT; 
+			questionTF.y = timerQuestion.y - questionTF.textHeight * 0.5;
 			reponseBtn1.setTexte(value.reponses[0]);
 			reponseBtn2.setTexte(value.reponses[1]);
 			if (value.nbReponses==3) reponseBtn3.setTexte(value.reponses[2]);
@@ -61,14 +65,16 @@ package com.flaxash.bouygues.quizz.view
 			timerQuestion.signalTimer.add(tempsEcoule);
 			timerQuestion.start();
 		}
-		private function onClick(me:MouseEvent):void {
+		protected function onClick(me:MouseEvent):void {
 			//Transmet la réponse
 			var num:uint = uint((me.currentTarget as BoutonReponse).name.charAt((me.currentTarget as BoutonReponse).name.length-1));
 			MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonReponse).name) + "ie " +num;
 			signalReponse.dispatch(_question.numQuestion,num);
+			SoundMixer.stopAll();
 		}
-		private function tempsEcoule():void {
+		protected function tempsEcoule():void {
 			signalReponse.dispatch(_question.numQuestion,0);
+			SoundMixer.stopAll();
 		}
 		
 	}

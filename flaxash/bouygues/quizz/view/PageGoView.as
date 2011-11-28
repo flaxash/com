@@ -4,12 +4,13 @@ package com.flaxash.bouygues.quizz.view
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	
+	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
 	import org.osflash.signals.Signal;
 	public class PageGoView extends MovieClip
 	{
 		//sur la scene
 		public var goBtn:SimpleButton;
-		
+		public var bandeauBas:BandeauBas;
 		public var signalGo:Signal;
 		public function PageGoView()
 		{

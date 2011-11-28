@@ -1,6 +1,8 @@
 package com.flaxash.bouygues.quizz.view
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVideoChoixPhotoVO;
+	import com.flaxash.bouygues.quizz.view.*;
 	import com.flaxash.bouygues.quizz.view.QuestionSonView;
 	import com.flaxash.bouygues.quizz.view.QuestionVideoView;
 	import com.flaxash.bouygues.quizz.view.QuestionVisuelView;
@@ -14,7 +16,6 @@ package com.flaxash.bouygues.quizz.view
 	import flash.geom.Rectangle;
 	
 	import org.osflash.signals.Signal;
-	
 	public class Navigation
 	{
 		public var signalTransition:Signal = new Signal();
@@ -22,6 +23,7 @@ package com.flaxash.bouygues.quizz.view
 		public var currentState:String;
 		public var ecranActif:MovieClip;
 		public var ecrans:Array;
+		private var positionsInit:Vector.<Number>;
 		private var lastClip:MovieClip=pageGo;
 		private var statesArray:Array = new Array("pageGo","choixQuestion","question","amis","loading");
 		private var pageGo:PageGoView;
@@ -31,8 +33,10 @@ package com.flaxash.bouygues.quizz.view
 		private var questionVideoChoixPhoto:QuestionVideoChoixPhotoView;
 		private var questionVisuel:QuestionVisuelView;
 		private var questionVisuel2Reponses:QuestionVisuel2ReponsesView;
-		private var loadingView:LoadingView;
-		private var viralisationView:ViralisationView;
+		private var loading:LoadingView;
+		private var tirageAuSort2:TirageAuSort2View;
+		private var pageIntermediaire : PageIntermediaireView;
+		private var page5Questions:Page5QuestionsView;
 		
 		public function Navigation()
 		{
@@ -59,7 +63,9 @@ package com.flaxash.bouygues.quizz.view
 									  _questionVisuel:QuestionVisuelView,
 									  _questionVisuel2Reponses:QuestionVisuel2ReponsesView,
 									  _loadingView:LoadingView,
-									  _viralisationView:ViralisationView):void 
+									  _tirageAS2:TirageAuSort2View,
+									  _pageIntermediaire:PageIntermediaireView,
+									  _page5Questions:Page5QuestionsView):void 
 		{
 			pageGo = _pageGo;
 			choixQuestion = _choixQuestion;
@@ -68,36 +74,42 @@ package com.flaxash.bouygues.quizz.view
 			questionVideoChoixPhoto = _questionVideoChoixPhoto;
 			questionVisuel = _questionVisuel;
 			questionVisuel2Reponses = _questionVisuel2Reponses;
-			loadingView = _loadingView;
-			viralisationView = _viralisationView;
-			
-			ecrans = new Array(pageGo,choixQuestion,questionSon,questionVideo,questionVideoChoixPhoto,questionVisuel,questionVisuel2Reponses,loadingView,viralisationView);
-			
+			loading = _loadingView;
+			tirageAuSort2 = _tirageAS2;
+			pageIntermediaire =_pageIntermediaire;
+			page5Questions = _page5Questions;
+			ecrans = new Array(pageGo,choixQuestion,questionSon,questionVideo,questionVideoChoixPhoto,questionVisuel,questionVisuel2Reponses,loading,tirageAuSort2,pageIntermediaire,page5Questions);
+			positionsInit = new Vector.<Number>();
+			for (var i :uint=0;i<ecrans.length;i++) {
+				positionsInit.push(MovieClip(ecrans[i]).y);
+			}
 			
 		}
 		public function allInvisible():void {
 			for each (var monMC:MovieClip in ecrans) {
 				if (monMC) {
-				trace(monMC);
-				monMC.visible=false;
-				monMC.enabled = false;
+					trace(monMC);
+					monMC.visible=false;
+					monMC.enabled = false;
+					monMC.y = 1000;
 				}
 			}
 		}
-
 		public function affiche(monMC:MovieClip,root:Sprite):void {
-			allInvisible();
+			MonsterDebugger.trace(this,monMC + " demandé");
+			//allInvisible();
+			makeLastInvisible();
 			monMC.visible = true;
 			monMC.enabled =true;
-			/*if (lastClip!=null) {
-				var maTransition : GestionParticles = new GestionParticles(lastClip,new Rectangle(0,0,520,802));
-				root.addChild(maTransition);
-				lastClip.visible=false;
-				//maTransition.startMvt();
-			}*/
+			monMC.y = positionsInit[ecrans.indexOf(monMC)];
 			lastClip=monMC;	
 		}
-		
+		private function makeLastInvisible():void {
+			if (lastClip) {
+				lastClip.visible=false;
+				//transitionOut(lastClip)
+			}
+		}
 		private function transitionFinie(e:Event):void 
 		{
 			signalTransition.dispatch("fin");	

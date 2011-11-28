@@ -4,6 +4,7 @@ package com.flaxash.bouygues.quizz.view
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVideoChoixPhotoVO;
 	import com.flaxash.bouygues.quizz.view.component.BoutonVisuelReponse;
+	import com.flaxash.bouygues.quizz.view.component.TimerQuestion;
 	
 	import flash.display.Loader;
 	import flash.display.MovieClip;
@@ -14,7 +15,9 @@ package com.flaxash.bouygues.quizz.view
 	import flash.net.URLRequest;
 	import flash.system.Security;
 	import flash.text.TextField;
-	
+	import flash.media.SoundMixer;
+	import flash.text.TextFieldAutoSize;
+
 	import org.osflash.signals.Signal;
 	
 	public class QuestionVideoChoixPhotoView extends MovieClip
@@ -23,7 +26,7 @@ package com.flaxash.bouygues.quizz.view
 		public var cibleVideo:MovieClip;
 		public var controlesVideo:MovieClip;
 		public var questionTF:TextField;
-		public var timerQuestion:MovieClip;
+		public var timerQuestion:TimerQuestion;
 		public var reponseBtn1:BoutonVisuelReponse;
 		public var reponseBtn2:BoutonVisuelReponse;
 		public var reponseBtn3:BoutonVisuelReponse;
@@ -51,6 +54,8 @@ package com.flaxash.bouygues.quizz.view
 			MonsterDebugger.trace(this,"majView dans QuestionVideoChoixPhoto : ");
 			MonsterDebugger.trace(this,question);
 			questionTF.text = question.question.toUpperCase();
+			questionTF.autoSize = TextFieldAutoSize.LEFT; 
+			questionTF.y = timerQuestion.y - questionTF.textHeight * 0.5;
 			reponseBtn1.setVisuel(question.nomsPhotos[0]);
 			reponseBtn2.setVisuel(question.nomsPhotos[1]);
 			reponseBtn3.setVisuel(question.nomsPhotos[2]);
@@ -68,6 +73,8 @@ package com.flaxash.bouygues.quizz.view
 			reponseBtn1.addEventListener(MouseEvent.CLICK,onClick);
 			reponseBtn2.addEventListener(MouseEvent.CLICK,onClick);
 			reponseBtn3.addEventListener(MouseEvent.CLICK,onClick);
+			timerQuestion.signalTimer.add(tempsEcoule);
+			timerQuestion.start();
 		}
 
 		private function initYoutube():void {
@@ -101,7 +108,7 @@ package com.flaxash.bouygues.quizz.view
 		}
 		private function joueVideo(idVid:String):void {
 			monPlayer.cueVideoById(idVid,0);
-			monPlayer.playVideo();
+			monPlayer.seekTo(0.1,false);
 			monPlayer.pauseVideo();
 			controlesVideo.gotoAndStop("play");
 			controlesVideo.addEventListener(MouseEvent.CLICK,playVideo);
@@ -111,6 +118,8 @@ package com.flaxash.bouygues.quizz.view
 			var num:uint = uint((me.currentTarget as BoutonVisuelReponse).name.charAt((me.currentTarget as BoutonVisuelReponse).name.length-1));
 			MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonVisuelReponse).name + " ie " +num);
 			signalReponse.dispatch(_question.numQuestion,num);
+			SoundMixer.stopAll();
+			monPlayer.pauseVideo();
 		}
 		private function playVideo(me:MouseEvent):void {
 			controlesVideo.gotoAndStop("vide");
@@ -125,9 +134,14 @@ package com.flaxash.bouygues.quizz.view
 			}
 		}
 		private function replayVideo(me:MouseEvent):void {
-			monPlayer.seekTo(0,false);
+			monPlayer.seekTo(0.1,false);
 			monPlayer.playVideo();
 			controlesVideo.gotoAndStop("vide");
+		}
+		private function tempsEcoule():void {
+			signalReponse.dispatch(_question.numQuestion,0);
+			SoundMixer.stopAll();
+			monPlayer.pauseVideo();
 		}
 
 
