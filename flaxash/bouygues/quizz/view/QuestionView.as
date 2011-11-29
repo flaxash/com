@@ -2,6 +2,7 @@ package com.flaxash.bouygues.quizz.view
 {
 	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
+	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
 	import com.flaxash.bouygues.quizz.view.component.BoutonReponse;
 	import com.flaxash.bouygues.quizz.view.component.TimerQuestion;
 	
@@ -9,9 +10,9 @@ package com.flaxash.bouygues.quizz.view
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.media.SoundMixer;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import flash.media.SoundMixer
 	
 	import org.osflash.signals.Signal;
 	
@@ -24,6 +25,7 @@ package com.flaxash.bouygues.quizz.view
 		public var bouton1:SimpleButton;
 		public var reponseBtn2:BoutonReponse;
 		public var bouton2:SimpleButton;
+		public var bandeauBas:BandeauBas;
 		//optionnel
 		public var reponseBtn3:BoutonReponse;
 		public var bouton3:SimpleButton;
@@ -70,11 +72,13 @@ package com.flaxash.bouygues.quizz.view
 			var num:uint = uint((me.currentTarget as BoutonReponse).name.charAt((me.currentTarget as BoutonReponse).name.length-1));
 			MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonReponse).name) + "ie " +num;
 			signalReponse.dispatch(_question.numQuestion,num);
+			timerQuestion.stopTimer();
 			SoundMixer.stopAll();
 		}
 		protected function tempsEcoule():void {
 			signalReponse.dispatch(_question.numQuestion,0);
 			SoundMixer.stopAll();
+			timerQuestion.stopTimer();
 		}
 		
 	}

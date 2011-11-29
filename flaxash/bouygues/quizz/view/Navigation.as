@@ -9,13 +9,16 @@ package com.flaxash.bouygues.quizz.view
 	import com.flaxash.transitionParticules.GestionParticles;
 	import com.greensock.TimelineLite;
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Quad;
 	
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import org.osflash.signals.Signal;
+
 	public class Navigation
 	{
 		public var signalTransition:Signal = new Signal();
@@ -23,8 +26,9 @@ package com.flaxash.bouygues.quizz.view
 		public var currentState:String;
 		public var ecranActif:MovieClip;
 		public var ecrans:Array;
+		public var lastClip:MovieClip;
+
 		private var positionsInit:Vector.<Number>;
-		private var lastClip:MovieClip=pageGo;
 		private var statesArray:Array = new Array("pageGo","choixQuestion","question","amis","loading");
 		private var pageGo:PageGoView;
 		private var choixQuestion:ChoixQuestionView;
@@ -101,6 +105,7 @@ package com.flaxash.bouygues.quizz.view
 			makeLastInvisible();
 			monMC.visible = true;
 			monMC.enabled =true;
+			animateComeIn(monMC);
 			monMC.y = positionsInit[ecrans.indexOf(monMC)];
 			lastClip=monMC;	
 		}
@@ -108,11 +113,22 @@ package com.flaxash.bouygues.quizz.view
 			if (lastClip) {
 				lastClip.visible=false;
 				//transitionOut(lastClip)
+			} else { 
+				allInvisible();
 			}
 		}
 		private function transitionFinie(e:Event):void 
 		{
 			signalTransition.dispatch("fin");	
+		}
+		private function animateComeIn(mc:MovieClip):void {
+			var monDO:DisplayObject;
+			for (var i:uint=0;i<mc.numChildren;i++) 
+			{
+				monDO = DisplayObject(mc.getChildAt(i));
+				monDO.cacheAsBitmap = true;
+				TweenLite.from(monDO,0.8,{x:String(Math.pow(-1,i)*100),alpha:0,delay:i*0.2,ease:Quad.easeOut});
+			}
 		}
 	}
 }

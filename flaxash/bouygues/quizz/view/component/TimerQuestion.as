@@ -44,6 +44,10 @@ package com.flaxash.bouygues.quizz.view.component
 			timer.start();
 			MonsterDebugger.trace(this,"timer démarré");
 		}
+		public function stopTimer():void {
+			timer.stop();
+			timer.reset();
+		}
 		private function onTick(te:TimerEvent):void 
 		{
 			redraw();

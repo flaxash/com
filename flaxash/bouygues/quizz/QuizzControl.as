@@ -17,7 +17,7 @@ package com.flaxash.bouygues.quizz
 		private var gestionScore:GestionScore;
 		private var loaderInitVars:ProxyGetInitVars;
 		private var loaderQuizz:ProxyGetQuizz;
-		private var loadingsTraites:uint=0;
+		private var loadingsTraites:uint;
 		
 		public var listeQuestionsChoisies:Array;
 		public var allQuestions:Array;
@@ -33,13 +33,14 @@ package com.flaxash.bouygues.quizz
 			super();
 			signalReady = new Signal(Boolean);
 			signalReponse = new Signal(XML);
-			
+
 		}
 		public function init():void {
 			gestionQuestions = new GestionQuestions();
 			gestionScore = new GestionScore();
 			loaderInitVars = new ProxyGetInitVars();
 			loaderQuizz = new ProxyGetQuizz();
+			loadingsTraites=0;
 			initListeners();
 		}
 		public function valideReponse(numQuestion:uint,numReponse:uint):void 
@@ -92,7 +93,7 @@ package com.flaxash.bouygues.quizz
 		private function questionsReady(all:Array):void {
 			if (all) {
 				allQuestions = all;
-				trace("questions prêtes");
+				MonsterDebugger.trace(this,"questions prêtes");
 				initLoadings();
 			}
 		}

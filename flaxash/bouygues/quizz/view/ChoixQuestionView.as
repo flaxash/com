@@ -95,10 +95,12 @@ package com.flaxash.bouygues.quizz.view
 			//grise le clip et enleve le listener si dejaFait=true
 			if (!monBouton.enabled) {
 				monBouton.removeEventListener(MouseEvent.CLICK,choixBouton);
+				monBouton.buttonMode = false;
 				//grise le bouton
 				monBouton.filters = [myGreyMatrixFilter];
 			} else {
 				monBouton.addEventListener(MouseEvent.CLICK,choixBouton);
+				monBouton.buttonMode = true;
 				//enleve les filtres
 				monBouton.filters = null;
 			}

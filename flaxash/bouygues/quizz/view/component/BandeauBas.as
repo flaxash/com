@@ -17,7 +17,7 @@ package com.flaxash.bouygues.quizz.view.component
 			initTimer();
 		}
 		private function initTimer():void {
-			monTimer = new Timer(6000,0);	
+			monTimer = new Timer(10000,0);	
 			monTimer.addEventListener(TimerEvent.TIMER,changeVisuel);
 			monTimer.start();
 			x_init = this.x;

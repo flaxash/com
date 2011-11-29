@@ -3,6 +3,7 @@ package com.flaxash.bouygues.quizz.view
 	import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVideoChoixPhotoVO;
+	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
 	import com.flaxash.bouygues.quizz.view.component.BoutonVisuelReponse;
 	import com.flaxash.bouygues.quizz.view.component.TimerQuestion;
 	
@@ -12,12 +13,12 @@ package com.flaxash.bouygues.quizz.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.media.SoundMixer;
 	import flash.net.URLRequest;
 	import flash.system.Security;
 	import flash.text.TextField;
-	import flash.media.SoundMixer;
 	import flash.text.TextFieldAutoSize;
-
+	
 	import org.osflash.signals.Signal;
 	
 	public class QuestionVideoChoixPhotoView extends MovieClip
@@ -30,7 +31,7 @@ package com.flaxash.bouygues.quizz.view
 		public var reponseBtn1:BoutonVisuelReponse;
 		public var reponseBtn2:BoutonVisuelReponse;
 		public var reponseBtn3:BoutonVisuelReponse;
-		
+		public var bandeauBas:BandeauBas;
 		private var monArray:Array = new Array(reponseBtn1,reponseBtn2,reponseBtn3);
 		private var _question:QuestionVideoChoixPhotoVO;
 		
@@ -120,6 +121,7 @@ package com.flaxash.bouygues.quizz.view
 			signalReponse.dispatch(_question.numQuestion,num);
 			SoundMixer.stopAll();
 			monPlayer.pauseVideo();
+			timerQuestion.stopTimer();
 		}
 		private function playVideo(me:MouseEvent):void {
 			controlesVideo.gotoAndStop("vide");
@@ -142,6 +144,7 @@ package com.flaxash.bouygues.quizz.view
 			signalReponse.dispatch(_question.numQuestion,0);
 			SoundMixer.stopAll();
 			monPlayer.pauseVideo();
+			timerQuestion.stopTimer();
 		}
 
 
