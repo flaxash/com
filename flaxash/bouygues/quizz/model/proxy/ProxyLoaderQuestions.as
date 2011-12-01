@@ -77,7 +77,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 				}
 				//trace(question.question)
 				questions.push(question);
-				MonsterDebugger.trace(this,question.numQuestion);
+				//MonsterDebugger.trace(this,question.numQuestion);
 			}
 			signalLoaded.dispatch(questions);
 		}

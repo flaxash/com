@@ -1,5 +1,10 @@
 package com.flaxash.bouygues.quizz.view.component
 {
+	import com.demonsters.debugger.MonsterDebugger;
+	import com.greensock.TimelineMax;
+	import com.greensock.TweenLite;
+	import com.greensock.easing.*;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -7,8 +12,7 @@ package com.flaxash.bouygues.quizz.view.component
 	import flash.utils.Timer;
 	
 	import org.osflash.signals.Signal;
-	import com.demonsters.debugger.MonsterDebugger;
-	
+
 	public class TimerQuestion extends MovieClip
 	{
 		//sur la scène
@@ -20,7 +24,12 @@ package com.flaxash.bouygues.quizz.view.component
 		public var signalTimer:Signal;
 
 		private var timer:Timer;
+		private var timerMvt:Timer;
+		private var compteurMvt:uint=0;
 		private var rayonClip:Number = 55;
+		private var xinit:Number;
+
+		private var maTimeline:TimelineMax;
 		
 		public function TimerQuestion()
 		{
@@ -33,24 +42,48 @@ package com.flaxash.bouygues.quizz.view.component
 			
 			//timer toutes les 200ms et qui durent en tout 45 s;
 			timer = new Timer(200,225);
+			timerMvt = new Timer(5000,8);
+			
 			signalTimer = new Signal();
 			timer.addEventListener(TimerEvent.TIMER,onTick);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE,onTimerComplete);
+			timerMvt.addEventListener(TimerEvent.TIMER,onTickMvt);
+			timerMvt.addEventListener(TimerEvent.TIMER_COMPLETE,onEnd);
 			//timer.start();
+			maTimeline = new TimelineMax();
+			maTimeline.append(new TweenLite(this,0.3,{scaleX:1.1,scaleY:1.1,x:"-5",ease:Quad.easeOut}));
+			maTimeline.append(new TweenLite(this,0.7,{scaleX:1,scaleY:1,x:"5",ease:Bounce.easeOut}));
+			maTimeline.repeat = 2;
 		}
 		public function start():void 
 		{
 			timer.reset();
 			timer.start();
+			timerMvt.reset();
+			timerMvt.start();
+			
 			MonsterDebugger.trace(this,"timer démarré");
 		}
 		public function stopTimer():void {
 			timer.stop();
 			timer.reset();
+			timerMvt.stop();
+			timerMvt.reset();
 		}
 		private function onTick(te:TimerEvent):void 
 		{
 			redraw();
+			
+		}
+		private function onTickMvt(te:TimerEvent):void {
+			//timerMvt.removeEventListener(TimerEvent.TIMER,onStart);
+			compteurMvt++;
+			//MonsterDebugger.trace(this,"onTickMVt avec compteur = "+compteurMvt);
+			if (compteurMvt==2 || compteurMvt==8) maTimeline.restart();
+		}
+		private function onEnd(te:TimerEvent):void {
+			timerMvt.removeEventListener(TimerEvent.TIMER_COMPLETE,onEnd);
+			maTimeline.play();
 		}
 		private function onTimerComplete(te:TimerEvent):void 
 		{

@@ -10,29 +10,49 @@ package com.flaxash.bouygues.quizz.view
 	{
 		//surla scène
 		public var scoreTF:TextField;
+		public var clipScore:MovieClip;
 		public var cercle:MovieClip;
-		private var _score:uint=0;;
+		private var _score:uint=0;
+		private var gagne:Boolean=false;
+		private var scoreChanged:Boolean=false;
 		public function BandeauScoreView()
 		{
 			super();
 		}
 		
-		public function majScore(newScore:uint):void {
-			if (newScore!=_score) {
-				_score = newScore;
+		public function majScore(_newScore:uint):void {
+				if (_score<_newScore) {
+					gagne=true;
+					scoreChanged = true;
+				} else {
+					gagne=false
+				}
+				_score = _newScore;
+				
+				
 				var maTimeline:TimelineLite = new TimelineLite();
-				maTimeline.append(new TweenLite(cercle,0.5,{scaleX:0.01,scaleY:0.01,onComplete:majTexteScore}));
-				maTimeline.append(new TweenLite(cercle,0.5,{scaleX:1,scaleY:1}));
-				maTimeline.play();
+				maTimeline.append(new TweenLite(cercle,0.5,{scaleX:0.01,scaleY:0.01,onComplete:tweenScore}));
+				maTimeline.append(new TweenLite(cercle,0.5,{scaleX:1,scaleY:1}),2.5);
+				//maTimeline.play();
 				//transition à faire
-			}				
+						
 			
 		}
 		
-		private function majTexteScore():void
+		private function tweenScore():void
 		{
-			scoreTF.text = _score.toString();
 			
+			var maTimeline:TimelineLite = new TimelineLite();
+			maTimeline.append(new TweenLite(clipScore,0.5,{x:gagne?"110":"-110",onComplete:majTexteScore}));
+			maTimeline.append(new TweenLite(clipScore,0.5,{x:gagne?"-110":"110"}),2);
+		
+			maTimeline.play();
+			
+		
+			
+		}
+		private function majTexteScore():void {
+			clipScore.scoreTF.text = _score.toString();
 		}
 	}
 }

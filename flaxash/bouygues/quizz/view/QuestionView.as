@@ -54,8 +54,13 @@ package com.flaxash.bouygues.quizz.view
 			questionTF.autoSize = TextFieldAutoSize.LEFT; 
 			questionTF.y = timerQuestion.y - questionTF.textHeight * 0.5;
 			reponseBtn1.setTexte(value.reponses[0]);
+			reponseBtn1.majFormat(value.numQuestion);
 			reponseBtn2.setTexte(value.reponses[1]);
-			if (value.nbReponses==3) reponseBtn3.setTexte(value.reponses[2]);
+			reponseBtn2.majFormat(value.numQuestion);
+			if (value.nbReponses==3) {
+				reponseBtn3.setTexte(value.reponses[2]);
+				reponseBtn3.majFormat(value.numQuestion);
+			}
 			initListeners();
 			
 		}

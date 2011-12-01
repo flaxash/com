@@ -8,6 +8,7 @@ package com.flaxash.bouygues.quizz.view
 	import com.flaxash.bouygues.quizz.view.QuestionVisuelView;
 	import com.flaxash.transitionParticules.GestionParticles;
 	import com.greensock.TimelineLite;
+	import com.greensock.TimelineMax;
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Quad;
 	
@@ -27,6 +28,7 @@ package com.flaxash.bouygues.quizz.view
 		public var ecranActif:MovieClip;
 		public var ecrans:Array;
 		public var lastClip:MovieClip;
+		private var newClip:MovieClip;
 
 		private var positionsInit:Vector.<Number>;
 		private var statesArray:Array = new Array("pageGo","choixQuestion","question","amis","loading");
@@ -102,12 +104,18 @@ package com.flaxash.bouygues.quizz.view
 		public function affiche(monMC:MovieClip,root:Sprite):void {
 			MonsterDebugger.trace(this,monMC + " demandé");
 			//allInvisible();
-			makeLastInvisible();
-			monMC.visible = true;
-			monMC.enabled =true;
-			animateComeIn(monMC);
-			monMC.y = positionsInit[ecrans.indexOf(monMC)];
-			lastClip=monMC;	
+			//makeLastInvisible();
+			newClip=monMC;
+			if (lastClip) animateOut(lastClip);
+			else {
+				newClip.visible = true;
+				newClip.enabled =true;
+				animateComeIn();
+				newClip.y = positionsInit[ecrans.indexOf(newClip)];
+			}
+			
+			
+			//lastClip=monMC;	
 		}
 		private function makeLastInvisible():void {
 			if (lastClip) {
@@ -121,14 +129,52 @@ package com.flaxash.bouygues.quizz.view
 		{
 			signalTransition.dispatch("fin");	
 		}
-		private function animateComeIn(mc:MovieClip):void {
+		private function animateComeIn():void {
+			MonsterDebugger.trace(this,"animateIn");
+			//bascule de la visibilté
+			newClip.visible = true;
+			newClip.enabled =true;
+			newClip.y = positionsInit[ecrans.indexOf(newClip)];
+			if (lastClip) 
+			{
+				lastClip.visible = false;
+				lastClip.enabled =false;
+				lastClip.y = 1000;
+			}
+			var matimeline:TimelineMax = new TimelineMax({onComplete:setLastClip});
+			var monDO:DisplayObject;
+			for (var i:uint=0;i<newClip.numChildren;i++) 
+			{
+				monDO = DisplayObject(newClip.getChildAt(i));
+				monDO.cacheAsBitmap = true;
+				monDO.alpha=0;
+				var xinit:Number = monDO.x;
+				monDO.x = Math.pow(-1,i)*100;
+				matimeline.insert( new TweenLite(monDO,0.8,{x:xinit,alpha:1,ease:Quad.easeOut}),0.1*i);
+			}
+			matimeline.play();
+		}
+		private function setLastClip ():void {
+			//lastClip devient newClip
+			lastClip=newClip;
+			var monDO:DisplayObject;
+			for (var i:uint=0;i<lastClip.numChildren;i++) 
+			{
+				monDO = DisplayObject(lastClip.getChildAt(i));
+				monDO.alpha=1;
+			}
+
+		}
+		private function animateOut(mc:MovieClip):void {
+			var matimeline:TimelineMax = new TimelineMax({onComplete:animateComeIn});
 			var monDO:DisplayObject;
 			for (var i:uint=0;i<mc.numChildren;i++) 
 			{
 				monDO = DisplayObject(mc.getChildAt(i));
 				monDO.cacheAsBitmap = true;
-				TweenLite.from(monDO,0.8,{x:String(Math.pow(-1,i)*100),alpha:0,delay:i*0.2,ease:Quad.easeOut});
+				matimeline.insert(new TweenLite(monDO,0.8,{alpha:0,ease:Quad.easeOut}),0.1*i);
 			}
+			matimeline.play();
 		}
 	}
 }

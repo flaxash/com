@@ -22,9 +22,10 @@ package com.flaxash.bouygues.quizz.view
 		private var monPlayer:Object;
 		private var playerReady:Boolean=false;
 		private var my_loader:Loader;
-		public var goUniversalBtn:SimpleButton;
+		//public var goUniversalBtn:SimpleButton;
+		public var goUniversalMC:MovieClip;
 		//à mettre à jour
-		private static const ID_VIDEO_UNIVERSAL:String = "3u--Joo5xyM";
+		private static const ID_VIDEO_UNIVERSAL:String = "QYl0FTaIqF0";
 		
 		public function Page5QuestionsView()
 		{
@@ -32,11 +33,13 @@ package com.flaxash.bouygues.quizz.view
 			visible=false;
 		}
 		public function initPage():void {
-			goUniversalBtn.addEventListener(MouseEvent.CLICK,goUniversal);
+			goUniversalMC.addEventListener(MouseEvent.CLICK,goUniversal);
+			goUniversalMC.buttonMod=true;
 			initYoutube();
 		}
 		
 		//private functions
+		
 		private function goUniversal(me:MouseEvent):void {
 			navigateToURL(new URLRequest("http://www.universalmobile.fr"),"_blank");
 		}
