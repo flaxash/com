@@ -8,7 +8,7 @@ package com.flaxash.bouygues.quizz.view
 	import flash.display.BitmapData;
 	
 	import flash.utils.*;
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	
 	public class QuestionVisuel2ReponsesView extends QuestionView
 	{
@@ -24,7 +24,7 @@ package com.flaxash.bouygues.quizz.view
 			super.majView(value);
 			var question:QuestionVisuelVO = value as QuestionVisuelVO;
 			while (cible.numChildren>0) cible.removeChildAt(0);
-			MonsterDebugger.trace(this,question.nomVisuel);
+			//MonsterDebugger.trace(this,question.nomVisuel);
 			insereVisuel(question.nomVisuel);
 			
 		}
@@ -36,7 +36,7 @@ package com.flaxash.bouygues.quizz.view
 			var monImage:Bitmap = new Bitmap(monBD);
 			monImage.x = -monImage.width/2;
 			monImage.y = -monImage.height/2;
-			MonsterDebugger.trace(this,monImage.width + "x" + monImage.height);
+			//MonsterDebugger.trace(this,monImage.width + "x" + monImage.height);
 			cible.addChild(monImage);
 		}
 

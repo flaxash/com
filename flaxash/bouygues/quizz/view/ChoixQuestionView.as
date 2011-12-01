@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionShortVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
@@ -83,7 +83,7 @@ package com.flaxash.bouygues.quizz.view
 				bouton.enabled = !listeQuestions[i-1].dejaFait;
 				validate(bouton);
 				numFrame = (numDepart + i)%NB_FRAMES_BOUTON + 1;
-				MonsterDebugger.trace(this,numFrame + " a été choisie pour bouton " +i);
+				//MonsterDebugger.trace(this,numFrame + " a été choisie pour bouton " +i);
 				bouton.visuels.gotoAndStop(numFrame);
 				//bouton.buttonMode = true;
 				//bouton.intro();
@@ -91,7 +91,7 @@ package com.flaxash.bouygues.quizz.view
 			
 		}
 		private function validate(monBouton:MovieClip):void {
-			MonsterDebugger.trace(this,monBouton.name +" enabled ? " + monBouton.enabled);
+			//MonsterDebugger.trace(this,monBouton.name +" enabled ? " + monBouton.enabled);
 			//grise le clip et enleve le listener si dejaFait=true
 			if (!monBouton.enabled) {
 				monBouton.removeEventListener(MouseEvent.CLICK,choixBouton);

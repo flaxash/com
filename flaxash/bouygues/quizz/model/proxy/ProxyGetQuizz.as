@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.model.proxy
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionShortVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	
@@ -46,7 +46,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 		
 		protected function reponseCompleteHandler(event:Event):void
 		{
-			MonsterDebugger.trace(this,"réponse reçue :-) : " + loaderReponse.data);
+			//MonsterDebugger.trace(this,"réponse reçue :-) : " + loaderReponse.data);
 			try {
 				reponseXML = new XML(loaderReponse.data);
 				if (reponseXML.win ==1) {
@@ -85,11 +85,11 @@ package com.flaxash.bouygues.quizz.model.proxy
 		protected function errorHandler(event:Event):void
 		{
 			// TODO Auto-generated method stub
-			MonsterDebugger.trace(this,"erreur pendant la requete php : " + event);
+			//MonsterDebugger.trace(this,"erreur pendant la requete php : " + event);
 			
 		}
 		public function valideReponse(numQuestion:uint,numReponse:uint):void {
-			MonsterDebugger.trace(this,"validation de réponse demandée...");
+			//MonsterDebugger.trace(this,"validation de réponse demandée...");
 			var dataReponse:URLVariables = new URLVariables();
 			dataReponse.idquest = numQuestion;
 			dataReponse.idreponse = numReponse;

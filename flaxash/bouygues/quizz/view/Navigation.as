@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVideoChoixPhotoVO;
 	import com.flaxash.bouygues.quizz.view.*;
 	import com.flaxash.bouygues.quizz.view.QuestionSonView;
@@ -102,7 +102,7 @@ package com.flaxash.bouygues.quizz.view
 			}
 		}
 		public function affiche(monMC:MovieClip,root:Sprite):void {
-			MonsterDebugger.trace(this,monMC + " demandé");
+			//MonsterDebugger.trace(this,monMC + " demandé");
 			//allInvisible();
 			//makeLastInvisible();
 			newClip=monMC;
@@ -130,7 +130,7 @@ package com.flaxash.bouygues.quizz.view
 			signalTransition.dispatch("fin");	
 		}
 		private function animateComeIn():void {
-			MonsterDebugger.trace(this,"animateIn");
+			//MonsterDebugger.trace(this,"animateIn");
 			//bascule de la visibilté
 			newClip.visible = true;
 			newClip.enabled =true;

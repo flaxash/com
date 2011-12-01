@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view.component
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenLite;
 	import com.greensock.easing.*;
@@ -62,7 +62,7 @@ package com.flaxash.bouygues.quizz.view.component
 			timerMvt.reset();
 			timerMvt.start();
 			
-			MonsterDebugger.trace(this,"timer démarré");
+			//MonsterDebugger.trace(this,"timer démarré");
 		}
 		public function stopTimer():void {
 			timer.stop();

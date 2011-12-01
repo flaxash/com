@@ -6,7 +6,7 @@ package com.flaxash.bouygues.quizz.view
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	
 	public class PageIntermediaireView extends MovieClip
 	{
@@ -25,7 +25,7 @@ package com.flaxash.bouygues.quizz.view
 			boutonInviteMoreFriends.addEventListener(MouseEvent.CLICK,inviteFriends);
 		}
 		private function inviteFriends(me:MouseEvent):void {
-			MonsterDebugger.trace(this,"inviteFriends function javascript called");
+			//MonsterDebugger.trace(this,"inviteFriends function javascript called");
 			ExternalInterface.call("invitations");
 		}
 	}

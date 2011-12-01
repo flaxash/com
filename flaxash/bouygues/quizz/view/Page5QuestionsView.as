@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
 	
 	import flash.display.Loader;
@@ -57,7 +57,7 @@ package com.flaxash.bouygues.quizz.view
 			monPlayer.addEventListener("onReady", onPlayerReady); 
 		} 
 		private function onPlayerReady(e:Event):void{
-			MonsterDebugger.trace(this,"player youtube is ready !");
+			//MonsterDebugger.trace(this,"player youtube is ready !");
 			monPlayer.setSize(240,135);
 			my_loader.x = -240/2;
 			my_loader.y = -135/2;

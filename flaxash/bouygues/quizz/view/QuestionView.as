@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
 	import com.flaxash.bouygues.quizz.view.component.BoutonReponse;
@@ -65,7 +65,7 @@ package com.flaxash.bouygues.quizz.view
 			
 		}
 		private function initListeners():void {
-			MonsterDebugger.trace(this,_question.nbReponses  + " réponses" );
+			//MonsterDebugger.trace(this,_question.nbReponses  + " réponses" );
 			reponseBtn1.addEventListener(MouseEvent.CLICK,onClick);
 			reponseBtn2.addEventListener(MouseEvent.CLICK,onClick);
 			if (_question.nbReponses ==3) reponseBtn3.addEventListener(MouseEvent.CLICK,onClick);
@@ -75,7 +75,7 @@ package com.flaxash.bouygues.quizz.view
 		protected function onClick(me:MouseEvent):void {
 			//Transmet la réponse
 			var num:uint = uint((me.currentTarget as BoutonReponse).name.charAt((me.currentTarget as BoutonReponse).name.length-1));
-			MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonReponse).name) + "ie " +num;
+			//MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonReponse).name) + "ie " +num;
 			signalReponse.dispatch(_question.numQuestion,num);
 			timerQuestion.stopTimer();
 			SoundMixer.stopAll();

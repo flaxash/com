@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.model.proxy
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.*;
 	
 	import flash.events.Event;

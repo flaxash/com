@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.*;
 	import com.flaxash.bouygues.quizz.model.VO.*;
 	import com.flaxash.bouygues.quizz.model.proxy.ProxyGetInitVars;
@@ -49,7 +49,7 @@ package com.flaxash.bouygues.quizz
 			loaderQuizz.valideReponse(numQuestion,numReponse);
 		}
 		public function actualiseQuestions(questions:Vector.<QuestionShortVO>):void {
-			MonsterDebugger.trace(this,"mise à jour : " + questions);
+			//MonsterDebugger.trace(this,"mise à jour : " + questions);
 			listeQuestionsChoisies = new Array();
 			var newQuestion:*;
 			nbQuestionsRestantes = 5;
@@ -83,7 +83,7 @@ package com.flaxash.bouygues.quizz
 			return newQuestions;
 		}
 		private function reponsePrete(reponse:String,xmlResult:XML):void {		
-			MonsterDebugger.trace(this,"reponse prete dans quizzcontrol : " +reponse);
+			//MonsterDebugger.trace(this,"reponse prete dans quizzcontrol : " +reponse);
 			signalReponse.dispatch(xmlResult);
 		}
 		private function initListeners():void {
@@ -93,7 +93,7 @@ package com.flaxash.bouygues.quizz
 		private function questionsReady(all:Array):void {
 			if (all) {
 				allQuestions = all;
-				MonsterDebugger.trace(this,"questions prêtes");
+				//MonsterDebugger.trace(this,"questions prêtes");
 				initLoadings();
 			}
 		}
@@ -127,13 +127,13 @@ package com.flaxash.bouygues.quizz
 						break;
 				}
 			}
-			MonsterDebugger.trace(this,"listeQuestions prêtes " + "- "+loadingsTraites);
+			//MonsterDebugger.trace(this,"listeQuestions prêtes " + "- "+loadingsTraites);
 			if (loadingsTraites==2) signalReady.dispatch(true);
 		}
 		private function majInitVars(_score:uint,_step:uint):void 
 		{
 			loadingsTraites++;
-			MonsterDebugger.trace(this,"score.php reçu");
+			//MonsterDebugger.trace(this,"score.php reçu");
 			score = _score;
 			step = _step;	
 			if (step==1 || step==3 || loadingsTraites==2) signalReady.dispatch(true);

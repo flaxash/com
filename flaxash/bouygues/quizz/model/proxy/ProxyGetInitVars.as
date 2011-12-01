@@ -8,7 +8,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 	
 	import org.osflash.signals.Signal;
 
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	public class ProxyGetInitVars
 	{
 		private static const URL_PHP_SCORE:String = "http://samesame.php-web.fr/lmfao/services/score.php";
@@ -38,7 +38,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 				var score:uint = uint(reponseXML.score.toString());
 				var step:uint = uint(reponseXML.step.toString());
 				signalInitVars.dispatch(score,step);
-				MonsterDebugger.trace(this,"vars step et score loaded : " + score + " - " + step);
+				//MonsterDebugger.trace(this,"vars step et score loaded : " + score + " - " + step);
 			} catch (e:TypeError) {
 				trace("Could not parse the score XML file.");
 				//loaderScore.load(maRequete);

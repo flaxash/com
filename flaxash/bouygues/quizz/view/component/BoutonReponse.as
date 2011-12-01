@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view.component
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	
 	
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
@@ -9,7 +9,7 @@ package com.flaxash.bouygues.quizz.view.component
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	
 	public class BoutonReponse extends MovieClip
 	{
@@ -66,7 +66,7 @@ package com.flaxash.bouygues.quizz.view.component
 				default :
 					texte.setTextFormat(textFormatNormal);
 					texte.y = 10;
-					MonsterDebugger.trace(this,"defaut text format pour" +  this.name);
+					//MonsterDebugger.trace(this,"defaut text format pour" +  this.name);
 					break;
 			}
 		}

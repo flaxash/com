@@ -26,11 +26,17 @@ package com.flaxash.bouygues.quizz.view.component
 		{
 			if (this.x>x_init-1) 
 			{
-				TweenLite.to(this,1,{x:x_init-535});
+				TweenLite.to(this,1,{x:x_init-535,overwrite:0,onComplete:majPosGauche});
 			}
 			else {
-				TweenLite.to(this,1,{x:x_init});
+				TweenLite.to(this,1,{x:x_init,overwrite:0,onComplete:majPosDroite});
 			}
+		}
+		private function majPosGauche():void {
+				this.x=x_init-535;
+			}
+		private function majPosDroite():void {		
+				this.x=x_init;
 		}
 	}
 	

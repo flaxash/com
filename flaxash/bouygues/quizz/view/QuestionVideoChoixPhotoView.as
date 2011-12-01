@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVideoChoixPhotoVO;
 	import com.flaxash.bouygues.quizz.view.component.BandeauBas;
@@ -52,8 +52,8 @@ package com.flaxash.bouygues.quizz.view
 		{
 			_question = question;
 			signalReponse = new Signal();
-			MonsterDebugger.trace(this,"majView dans QuestionVideoChoixPhoto : ");
-			MonsterDebugger.trace(this,question);
+			//MonsterDebugger.trace(this,"majView dans QuestionVideoChoixPhoto : ");
+			//MonsterDebugger.trace(this,question);
 			questionTF.text = question.question.toUpperCase();
 			questionTF.autoSize = TextFieldAutoSize.LEFT; 
 			questionTF.y = timerQuestion.y - questionTF.textHeight * 0.5;
@@ -70,7 +70,7 @@ package com.flaxash.bouygues.quizz.view
 			
 		}
 		private function initListeners():void {
-			MonsterDebugger.trace(this,_question.numQuestion  + " a " + _question.nomsPhotos.length + " réponses" );
+			//MonsterDebugger.trace(this,_question.numQuestion  + " a " + _question.nomsPhotos.length + " réponses" );
 			reponseBtn1.addEventListener(MouseEvent.CLICK,onClick);
 			reponseBtn2.addEventListener(MouseEvent.CLICK,onClick);
 			reponseBtn3.addEventListener(MouseEvent.CLICK,onClick);
@@ -97,7 +97,7 @@ package com.flaxash.bouygues.quizz.view
 			
 		} 
 		private function onPlayerReady(e:Event):void{
-			MonsterDebugger.trace(this,"player youtube is ready !");
+			//MonsterDebugger.trace(this,"player youtube is ready !");
 			monPlayer.setSize(480,270);
 			my_loader.x = -480/2;
 			my_loader.y = -270/2;
@@ -117,7 +117,7 @@ package com.flaxash.bouygues.quizz.view
 		private function onClick(me:MouseEvent):void {
 			//Transmet la réponse
 			var num:uint = uint((me.currentTarget as BoutonVisuelReponse).name.charAt((me.currentTarget as BoutonVisuelReponse).name.length-1));
-			MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonVisuelReponse).name + " ie " +num);
+			//MonsterDebugger.trace(this,"choix de réponse : " +(me.currentTarget as BoutonVisuelReponse).name + " ie " +num);
 			signalReponse.dispatch(_question.numQuestion,num);
 			SoundMixer.stopAll();
 			monPlayer.pauseVideo();

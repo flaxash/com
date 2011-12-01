@@ -1,6 +1,6 @@
 package com.flaxash.bouygues.quizz.view
 {
-	import com.demonsters.debugger.MonsterDebugger;
+	//import com.demonsters.debugger.MonsterDebugger;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionSonVO;
 	import com.flaxash.bouygues.quizz.model.VO.QuestionVO;
 	
@@ -34,9 +34,9 @@ package com.flaxash.bouygues.quizz.view
 		}
 		private function insereSon(nomClasse:String):void {
 			var Son:Class = getDefinitionByName(nomClasse) as Class;
-			MonsterDebugger.trace(this,Son);
+			//MonsterDebugger.trace(this,Son);
 			extrait = new Son();
-			MonsterDebugger.trace(this,extrait);
+			//MonsterDebugger.trace(this,extrait);
 			initListeners();
 		}
 		private function initListeners():void 
@@ -45,13 +45,13 @@ package com.flaxash.bouygues.quizz.view
 			controlesSon.gotoAndStop("play");
 		}
 		private function startSon(me:MouseEvent):void {
-			MonsterDebugger.trace(this,"son requested : " + extrait.length);
+			//MonsterDebugger.trace(this,"son requested : " + extrait.length);
 			controlesSon.gotoAndStop("vide");
 			controlesSon.removeEventListener(MouseEvent.CLICK,startSon);
 			//
 			son = extrait.play();
 			son.addEventListener(Event.SOUND_COMPLETE,detecteFin);
-			MonsterDebugger.trace(this,son.position);
+			//MonsterDebugger.trace(this,son.position);
 			
 		}
 		private function detecteFin(e:Event):void {
