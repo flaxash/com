@@ -64,6 +64,7 @@ package com.flaxash.bouygues.quizz.view
 		private function onPlayerReady(e:Event):void{
 			//MonsterDebugger.trace(this,"player youtube is ready !");
 			monPlayer.setSize(480,270);
+			
 			my_loader.x = -480/2;
 			my_loader.y = -270/2;
 			playerReady =true;
@@ -76,6 +77,7 @@ package com.flaxash.bouygues.quizz.view
 			monPlayer.cueVideoById(idVid,0);
 			monPlayer.seekTo(0.1,false);
 			monPlayer.pauseVideo();
+			monPlayer.setPlaybackQuality("medium");
 			controlesVideo.gotoAndStop("play");
 			controlesVideo.addEventListener(MouseEvent.CLICK,playVideo);
 		}

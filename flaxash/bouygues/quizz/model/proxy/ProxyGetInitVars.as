@@ -11,8 +11,8 @@ package com.flaxash.bouygues.quizz.model.proxy
 	//import com.demonsters.debugger.MonsterDebugger;
 	public class ProxyGetInitVars
 	{
-		private static const URL_PHP_SCORE:String = "http://samesame.php-web.fr/lmfao/services/score.php";
-
+		//private static const URL_PHP_SCORE:String = "http://samesame.php-web.fr/lmfao/services/score.php";
+		private static const URL_PHP_SCORE:String = "services/score.php";
 		private var loaderScore:URLLoader;
 		private var maRequete:URLRequest;
 		private var reponseXML:XML;

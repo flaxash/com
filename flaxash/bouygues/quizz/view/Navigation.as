@@ -129,18 +129,33 @@ package com.flaxash.bouygues.quizz.view
 		{
 			signalTransition.dispatch("fin");	
 		}
+		private function animateOut(mc:MovieClip):void {
+			//mouvement des DO de lastClip (disparition)
+			var matimeline:TimelineMax = new TimelineMax({onComplete:animateComeIn});
+			var monDO:DisplayObject;
+			for (var i:uint=0;i<mc.numChildren;i++) 
+			{
+				monDO = DisplayObject(mc.getChildAt(i));
+				monDO.cacheAsBitmap = true;
+				matimeline.insert(new TweenLite(monDO,0.8,{alpha:0,ease:Quad.easeOut}),0.1*i);
+			}
+			matimeline.play();
+		}
+
 		private function animateComeIn():void {
 			//MonsterDebugger.trace(this,"animateIn");
 			//bascule de la visibilté
-			newClip.visible = true;
-			newClip.enabled =true;
-			newClip.y = positionsInit[ecrans.indexOf(newClip)];
+			
+			
+			
 			if (lastClip) 
 			{
 				lastClip.visible = false;
 				lastClip.enabled =false;
 				lastClip.y = 1000;
 			}
+			lastClip=newClip;
+			//mouvement des DO de newClip
 			var matimeline:TimelineMax = new TimelineMax({onComplete:setLastClip});
 			var monDO:DisplayObject;
 			for (var i:uint=0;i<newClip.numChildren;i++) 
@@ -152,11 +167,14 @@ package com.flaxash.bouygues.quizz.view
 				monDO.x = Math.pow(-1,i)*100;
 				matimeline.insert( new TweenLite(monDO,0.8,{x:xinit,alpha:1,ease:Quad.easeOut}),0.1*i);
 			}
+			newClip.y = positionsInit[ecrans.indexOf(newClip)];
+			newClip.visible = true;
 			matimeline.play();
 		}
 		private function setLastClip ():void {
+			newClip.enabled =true;
 			//lastClip devient newClip
-			lastClip=newClip;
+			
 			var monDO:DisplayObject;
 			for (var i:uint=0;i<lastClip.numChildren;i++) 
 			{
@@ -164,17 +182,6 @@ package com.flaxash.bouygues.quizz.view
 				monDO.alpha=1;
 			}
 
-		}
-		private function animateOut(mc:MovieClip):void {
-			var matimeline:TimelineMax = new TimelineMax({onComplete:animateComeIn});
-			var monDO:DisplayObject;
-			for (var i:uint=0;i<mc.numChildren;i++) 
-			{
-				monDO = DisplayObject(mc.getChildAt(i));
-				monDO.cacheAsBitmap = true;
-				matimeline.insert(new TweenLite(monDO,0.8,{alpha:0,ease:Quad.easeOut}),0.1*i);
-			}
-			matimeline.play();
 		}
 	}
 }

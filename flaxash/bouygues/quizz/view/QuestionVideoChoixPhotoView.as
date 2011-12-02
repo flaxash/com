@@ -111,6 +111,7 @@ package com.flaxash.bouygues.quizz.view
 			monPlayer.cueVideoById(idVid,0);
 			monPlayer.seekTo(0.1,false);
 			monPlayer.pauseVideo();
+			monPlayer.setPlaybackQuality("medium");
 			controlesVideo.gotoAndStop("play");
 			controlesVideo.addEventListener(MouseEvent.CLICK,playVideo);
 		}

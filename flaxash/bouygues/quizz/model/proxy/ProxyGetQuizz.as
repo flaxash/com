@@ -15,7 +15,8 @@ package com.flaxash.bouygues.quizz.model.proxy
 	
 	public class ProxyGetQuizz
 	{
-		private static const URL_PHP_QUIZZ:String = "http://samesame.php-web.fr/lmfao/services/quizz.php";
+		//private static const URL_PHP_QUIZZ:String = "http://samesame.php-web.fr/lmfao/services/quizz.php";
+		private static const URL_PHP_QUIZZ:String = "services/quizz.php";
 		
 		public var signalReponse:Signal;
 		public var signalQuestions:Signal;
