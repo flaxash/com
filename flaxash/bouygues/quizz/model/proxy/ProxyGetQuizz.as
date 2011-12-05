@@ -26,13 +26,15 @@ package com.flaxash.bouygues.quizz.model.proxy
 		private var maRequeteGet:URLRequest;
 		private var maRequetePost:URLRequest;
 		private var reponseXML:XML;
+		private var sessid:String="";
 		
-		public function ProxyGetQuizz()
+		public function ProxyGetQuizz(_sessid:String="")
 		{
 			//constructeur
+			sessid = _sessid;
 			signalReponse = new Signal();
 			signalQuestions = new Signal();
-			maRequeteGet = new URLRequest(URL_PHP_QUIZZ);
+			maRequeteGet = new URLRequest(URL_PHP_QUIZZ + "?sessid=" + sessid);
 			maRequetePost = new URLRequest(URL_PHP_QUIZZ);
 			maRequeteGet.method = URLRequestMethod.GET;
 			maRequetePost.method = URLRequestMethod.POST;
@@ -94,6 +96,7 @@ package com.flaxash.bouygues.quizz.model.proxy
 			var dataReponse:URLVariables = new URLVariables();
 			dataReponse.idquest = numQuestion;
 			dataReponse.idreponse = numReponse;
+			dataReponse.sessid = sessid;
 			maRequetePost.data = dataReponse;
 			loaderReponse.load(maRequetePost);
 		}

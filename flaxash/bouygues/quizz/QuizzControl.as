@@ -18,7 +18,7 @@ package com.flaxash.bouygues.quizz
 		private var loaderInitVars:ProxyGetInitVars;
 		private var loaderQuizz:ProxyGetQuizz;
 		private var loadingsTraites:uint;
-		
+		private var sessid:String="";
 		public var listeQuestionsChoisies:Array;
 		public var allQuestions:Array;
 		public var nbQuestionsRestantes:uint;
@@ -28,9 +28,11 @@ package com.flaxash.bouygues.quizz
 		public var step:uint;
 		public var score:uint;
 		
-		public function QuizzControl()
+		
+		public function QuizzControl(_sessid:String="")
 		{
 			super();
+			sessid=_sessid;
 			signalReady = new Signal(Boolean);
 			signalReponse = new Signal(XML);
 
@@ -38,8 +40,8 @@ package com.flaxash.bouygues.quizz
 		public function init():void {
 			gestionQuestions = new GestionQuestions();
 			gestionScore = new GestionScore();
-			loaderInitVars = new ProxyGetInitVars();
-			loaderQuizz = new ProxyGetQuizz();
+			loaderInitVars = new ProxyGetInitVars(sessid);
+			loaderQuizz = new ProxyGetQuizz(sessid);
 			loadingsTraites=0;
 			initListeners();
 		}

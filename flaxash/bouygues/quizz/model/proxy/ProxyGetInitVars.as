@@ -16,17 +16,18 @@ package com.flaxash.bouygues.quizz.model.proxy
 		private var loaderScore:URLLoader;
 		private var maRequete:URLRequest;
 		private var reponseXML:XML;
-		
+		private var sessid:String="";
 		public var signalInitVars:Signal;
-		public function ProxyGetInitVars()
+		public function ProxyGetInitVars(_sessid:String="")
 		{
 			//constructeur
 			signalInitVars = new Signal(uint,uint);
+			sessid = _sessid;
 		}
 		public function loadInitVars():void 
 		{
 			loaderScore= new URLLoader();
-			maRequete = new URLRequest(URL_PHP_SCORE);
+			maRequete = new URLRequest(URL_PHP_SCORE + "?sessid="+sessid);
 			maRequete.method = URLRequestMethod.GET;
 			loaderScore.addEventListener(Event.COMPLETE,onLoadComplete);
 			loaderScore.load(maRequete);
