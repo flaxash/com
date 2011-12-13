@@ -18,7 +18,7 @@ package com.flaxash.bouygues.quizz.view
 		//sur la scène
 		public var bandeauBas:BandeauBas;
 		public var cibleVideo:MovieClip;
-		public var controlesVideo : MovieClip;
+		//public var controlesVideo : MovieClip;
 		private var monPlayer:Object;
 		private var playerReady:Boolean=false;
 		private var my_loader:Loader;
@@ -31,10 +31,12 @@ package com.flaxash.bouygues.quizz.view
 		{
 			super();
 			visible=false;
+			//à enlever avant mise en prod !!
+			//initPage();
 		}
 		public function initPage():void {
 			goUniversalMC.addEventListener(MouseEvent.CLICK,goUniversal);
-			goUniversalMC.buttonMod=true;
+			goUniversalMC.buttonMode=true;
 			initYoutube();
 		}
 		
@@ -48,7 +50,10 @@ package com.flaxash.bouygues.quizz.view
 			Security.allowDomain("s.ytimg.com/yt/swfbin/");
 			
 			my_loader = new Loader();
-			my_loader.load(new URLRequest("http://www.youtube.com/apiplayer?version=3")); 
+			//my_loader.load(new URLRequest("http://www.youtube.com/apiplayer?version=3"));
+			var stringRequest:String = "http://www.youtube.com/v/"+ID_VIDEO_UNIVERSAL+"?version=3&color=white&modestbranding=1&rel=0&showinfo=0";
+			//var stringRequest:String = "http://www.youtube.com/v/"+ID_VIDEO_UNIVERSAL+"?version=3";
+			my_loader.load(new URLRequest(stringRequest));
 			my_loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit);
 		}
 		private function onLoaderInit(e:Event):void{
@@ -63,9 +68,9 @@ package com.flaxash.bouygues.quizz.view
 			my_loader.y = -135/2;
 			playerReady =true;
 			my_loader.visible = true;
-			joueVideo(ID_VIDEO_UNIVERSAL);
+			//joueVideo(ID_VIDEO_UNIVERSAL);
 		}
-		private function joueVideo(idVid:String):void {
+/*		private function joueVideo(idVid:String):void {
 			monPlayer.cueVideoById(idVid,0);
 			monPlayer.seekTo(0.1,false);
 			monPlayer.pauseVideo();
@@ -89,6 +94,6 @@ package com.flaxash.bouygues.quizz.view
 			monPlayer.playVideo();
 			controlesVideo.gotoAndStop("vide");
 		}
-		
+*/		
 	}
 }
