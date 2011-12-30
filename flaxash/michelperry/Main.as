@@ -17,6 +17,7 @@ package com.flaxash.michelperry
 	import com.flaxash.michelperry.view.*;
 	import org.osflash.signals.Signal;
 	
+	//classe de main.fla
 	public class Main extends MovieClip
 	{
 		//gestion des view states dans cette classe
@@ -25,7 +26,7 @@ package com.flaxash.michelperry
 		public static const STATE_GALLERYTHUMBS:String = "stateGalleryThumbs";
 		public static const STATE_ABOUT:String = "stateAbout";
 		public static const STATE_CONTACTPRESSE:String="stateContactPresse";
-		
+		//sur la scene
 		public var clipGalleryVisuels :Gallerie;
 		public var clipAbout :About;
 		public var clipMenu :Menu;
