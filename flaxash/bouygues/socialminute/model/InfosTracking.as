@@ -41,7 +41,8 @@ package com.flaxash.bouygues.socialminute.model
 			queueXML.append(new XMLLoader(XML_PATH+"annivDate.xml",{name:"annivDateXML",onComplete:parseData}));
 			queueXML.append(new XMLLoader(XML_PATH+"photos.xml",{name:"photosXML",onComplete:parseData}));
 			queueXML.append(new XMLLoader(XML_PATH+"amiActif.xml",{name:"amiActifXML",onComplete:parseData}));
-			
+			queueXML.append(new XMLLoader(XML_PATH+"publiStar.xml",{name:"publiStarXML",onComplete:parseData}));
+			queueXML.append(new XMLLoader(XML_PATH+"aVenir.xml",{name:"publiStarXML",onComplete:parseData}));
 
 			queueXML.load();
 			
@@ -83,8 +84,10 @@ package com.flaxash.bouygues.socialminute.model
 						fCoord = ptCoordS.split(",");
 						//x = Math.round(10*fCoord[0]/2)/10;
 						//y = Math.round(10*fCoord[1]/2)/10;
-						x = Math.floor(fCoord[0]*2)/5;
-						y = Math.floor(fCoord[1]*2)/5;
+						x = Math.round(Math.floor(fCoord[0])/2.5);
+						y = Math.round(Math.floor(fCoord[1])/2.5);
+						//x = fCoord[0];
+						//y = fCoord[1];
 						ptCoord.push([x,y]);
 						
 					}

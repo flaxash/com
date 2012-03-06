@@ -5,7 +5,7 @@ package com.flaxash.bouygues.socialminute.view
 	public class Statut3 extends MovieClip
 	{
 		public var trackingWidth:Number		= 359;
-		public var trackingHeight:Number	= 204;
+		public var trackingHeight:Number	= 211;
 
 		public function Statut3()
 		{
