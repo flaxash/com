@@ -225,13 +225,9 @@ package com.flaxash.michelperry.view
 					collectionBtn.visible=false;
 					if (currentState==Main.STATE_GALLERY) 
 					{
-						TweenLite.to(shopMC,0.5,{tint:0x000000});
-						TweenLite.to(aboutMC,0.5,{tint:0x000000});
-						TweenLite.to(contactMC,0.5,{tint:0x000000});
+						changeCouleurs(0x000000);
 					} else {
-						TweenLite.to(shopMC,0.5,{tint:0xFFFFFF});
-						TweenLite.to(aboutMC,0.5,{tint:0xFFFFFF});
-						TweenLite.to(contactMC,0.5,{tint:0xFFFFFF});
+						changeCouleurs(0xFFFFFF);
 					}
 					break;
 				case "AH2011":
@@ -240,9 +236,7 @@ package com.flaxash.michelperry.view
 					collectionMC.visible=true;
 					collectionBtn.enabled=true;
 					collectionBtn.visible=true;
-					TweenLite.to(shopMC,0.5,{tint:0xFFFFFF});
-					TweenLite.to(aboutMC,0.5,{tint:0xFFFFFF});
-					TweenLite.to(contactMC,0.5,{tint:0xFFFFFF});
+					changeCouleurs(0xFFFFFF);
 					break;
 				case "PE2012":
 					saisonAH11MC.visible=false;
@@ -250,15 +244,21 @@ package com.flaxash.michelperry.view
 					collectionMC.visible=true;
 					collectionBtn.enabled=true;
 					collectionBtn.visible=true;
-					TweenLite.to(shopMC,0.5,{tint:0xFFFFFF});
-					TweenLite.to(aboutMC,0.5,{tint:0xFFFFFF});
-					TweenLite.to(contactMC,0.5,{tint:0xFFFFFF});
+					changeCouleurs(0xFFFFFF);
 					break;
 				default:
 					break;
 			}
 			trace("maj infos effectuées pour "+_collectionEnCours);
 			
+		}
+		private function changeCouleurs(color:Number):void {
+			TweenLite.to(shopMC,0.5,{tint:color});
+			TweenLite.to(aboutMC,0.5,{tint:color});
+			TweenLite.to(contactMC,0.5,{tint:color});
+			TweenLite.to(logoMC,0.5,{tint:color});
+			TweenLite.to(frBtn,0.5,{tint:color});
+			TweenLite.to(ukBtn,0.5,{tint:color});
 		}
 		private function onOver(me:MouseEvent):void {
 			var nameMC:String = (me.target.name as String).replace("Btn","MC");

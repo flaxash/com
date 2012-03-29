@@ -1,12 +1,11 @@
 package com.flaxash.michelperry.view
 {
 	import com.flaxash.michelperry.model.VO.ShoeVO;
+	import com.greensock.TweenLite;
 	
 	import flash.display.Sprite;
 	
 	import org.osflash.signals.Signal;
-	
-	import com.greensock.TweenLite;
 	
 	public class ConteneurCollections extends Sprite
 	{
@@ -14,7 +13,9 @@ package com.flaxash.michelperry.view
 		//enfants sur la scène
 		public var collAH11:Collection;
 		public var collPE12:Collection;
-		public var choixColl:ChoixCollection;
+		//modif temporaire pour mise à la une de la collection cerise
+		//public var choixColl:ChoixCollection;
+		public var choixColl:CerisesChoixCollection;
 		
 		public var couleurFond:Number = 0x81878c;
 		public var lastColor:Number;
@@ -51,6 +52,7 @@ package com.flaxash.michelperry.view
 		}
 		public function changeCollection(param:String):void 
 		{
+			//navigation entre les collections et la home page
 			switch(param) 
 			{
 			case "AH2011":
@@ -92,6 +94,10 @@ package com.flaxash.michelperry.view
 				currentState = "choix";
 				//pour mettre à jour la couleur du fond
 				signalColorFond.dispatch(0xffffff);
+				//modif pour mettre les boutons noirs lorsque visuel cerises
+				TweenLite.to(choixColl.pe2012,0,{tint:0x000000});
+				TweenLite.to(choixColl.ah2011,0,{tint:0x000000});
+
 				break;
 			default:
 				break;
